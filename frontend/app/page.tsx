@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Search, ArrowRight, Menu, Facebook, Twitter, Instagram, Linkedin, Play, Pause } from 'lucide-react'
+import { Search, ArrowRight, Menu, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent } from '@/components/ui/card'
@@ -362,7 +362,7 @@ export default function Component() {
             <div className="max-w-3xl mx-auto text-center">
               <h2 className="text-3xl font-bold text-gray-900 mb-6">Join the Fashion Revolution</h2>
               <p className="text-xl text-gray-600 mb-8">
-                Be part of a community that's shaping the future of fashion wholesale. Whether you're a buyer or a brand, Portal Wholesale offers the tools and connections you need to thrive.
+                Be part of a community that&apos;s shaping the future of fashion wholesale. Whether you&apos;re a buyer or a brand, Portal Wholesale offers the tools and connections you need to thrive.
               </p>
               {/* TODO: Backend Dev - Implement user registration or lead capture functionality */}
               <Button className="bg-[#30959A] hover:bg-[#004B4F] text-white px-8 py-3 text-lg rounded-full transition-colors duration-200">
