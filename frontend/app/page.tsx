@@ -61,6 +61,7 @@ export default function Component() {
       <Head>
         <title>Portal Wholesale - Connect Fashion Buyers and Brands</title>
         <meta name="description" content="Portal Wholesale is the premier platform connecting fashion buyers and wholesale brands. Discover, connect, and grow your fashion business." />
+        <meta name="robots" content="noindex, nofollow" />
         <meta name="keywords" content="fashion wholesale, buyer platform, brand discovery, wholesale marketplace" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="canonical" href="https://www.portalwholesale.com" />
