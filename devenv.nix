@@ -13,6 +13,10 @@
   ];
 
   languages = {
+    go = {
+      enable = true;
+    };
+
     javascript = {
       enable = true;
       bun = {
