@@ -1,7 +1,16 @@
-{ pkgs, lib, config, inputs, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  inputs,
+  ...
+}:
 
 {
-  packages = [ pkgs.git ];
+  packages = [
+    pkgs.git
+    pkgs.pocketbase
+  ];
 
   languages = {
     javascript = {
@@ -19,9 +28,7 @@
   # https://devenv.sh/services/
   # services.postgres.enable = true;
 
-  enterShell = ''
-  '';
+  enterShell = '''';
 
-  enterTest = ''
-  '';
+  enterTest = '''';
 }
