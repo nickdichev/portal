@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { Heart, Flag, Star } from 'lucide-react'
 
-export default function Component({ props }: { props: { brand: object, isSaved: boolean } }) {
+export default function Header({ props }: { props: { brand: object, isSaved: boolean } }) {
     const { brand, isSaved } = props
 
     const headerRef = useRef<HTMLDivElement>(null)

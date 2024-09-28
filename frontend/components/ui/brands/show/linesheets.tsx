@@ -8,7 +8,7 @@ import { Calendar } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 
-export default function BrandLinesheets({ linesheets }: { linesheets: object[] }) {
+export default function Linesheets({ linesheets }: { linesheets: object[] }) {
   const [visibleLinesheets, setVisibleLinesheets] = useState(2);
 
   useEffect(() => {

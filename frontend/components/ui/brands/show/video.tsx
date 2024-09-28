@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Play } from "lucide-react"
 
-export default function BrandVideo({ video_url }: { video_url: string }) {
+export default function Video({ video_url }: { video_url: string }) {
     return (
           <div className="bg-white rounded-lg p-4 mb-4 shadow">
             <div className="relative w-full" style={{ paddingBottom: '56.25%', height: 0 }}>

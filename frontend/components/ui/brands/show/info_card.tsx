@@ -1,5 +1,5 @@
 import { Brand } from '@/models/Brand'
-export default function BrandCard({ brand }: { brand: Brand }) {
+export default function InfoCard({ brand }: { brand: Brand }) {
   return (
     <div id="brand-info" className="bg-white rounded-lg p-4 mb-4 shadow">
       <h3 className="text-lg font-semibold mb-2">SECULAR brand wholesale information & reviews</h3>

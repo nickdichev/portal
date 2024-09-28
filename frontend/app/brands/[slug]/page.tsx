@@ -12,11 +12,11 @@ import { useMediaQuery } from 'react-responsive'
 import PocketBase from 'pocketbase';
 import { Brand } from '@/models/Brand'
 
-import BrandHeader from '@/components/ui/brands/show/brand_header'
-import BrandCard from '@/components/ui/brands/show/brand_card'
+import Header from '@/components/ui/brands/show/header'
+import InfoCard from '@/components/ui/brands/show/info_card'
 import ProductGallery from '@/components/ui/brands/show/product_gallery'
-import BrandVideo from '@/components/ui/brands/show/brand_video'
-import BrandLinesheets from '@/components/ui/brands/show/brand_linesheets'
+import Video from '@/components/ui/brands/show/video'
+import Linesheets from '@/components/ui/brands/show/linesheets'
 import Stockists from '@/components/ui/brands/show/stockists'
 import Rating from '@/components/ui/brands/show/rating'
 import Reviews from '@/components/ui/brands/show/reviews'
@@ -129,7 +129,7 @@ export default async function BrandShowPage({ params }: { params: { slug: string
         <Image src="/placeholder.svg" alt="Fashion model" layout="fill" objectFit="cover" />
       </div>
 
-      <BrandHeader props={{ brand, isSaved: true }} />
+      <Header props={{ brand, isSaved: true }} />
 
       <div className="flex flex-col md:flex-row gap-4">
         {/* Mobile-first Right Column (will be on top for mobile) */}
@@ -191,10 +191,10 @@ export default async function BrandShowPage({ params }: { params: { slug: string
         </div>
 
         <div className="md:w-2/3 md:order-1">
-          <BrandCard brand={brand} />
+          <InfoCard brand={brand} />
           <ProductGallery productImages={productImages} />
-          <BrandVideo video_url={brand.video_url} />
-          <BrandLinesheets linesheets={linesheets} />
+          <Video video_url={brand.video_url} />
+          <Linesheets linesheets={linesheets} />
           <Stockists stockists={stockists} />
         </div>
       </div>
