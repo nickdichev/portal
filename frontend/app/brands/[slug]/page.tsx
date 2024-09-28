@@ -16,6 +16,8 @@ import BrandHeader from '@/components/ui/brands/show/brand_header'
 import BrandCard from '@/components/ui/brands/show/brand_card'
 import ProductGallery from '@/components/ui/brands/show/product_gallery'
 import BrandVideo from '@/components/ui/brands/show/brand_video'
+import BrandLinesheets from '@/components/ui/brands/show/brand_linesheets'
+
 async function getBrand(slug: string): Promise<Brand> {
   const pb = new PocketBase('http://127.0.0.1:8090');
 
@@ -49,6 +51,14 @@ export default async function BrandShowPage({ params }: { params: { slug: string
     '/placeholder.svg',
     '/placeholder.svg',
     '/placeholder.svg',
+  ]
+
+  const linesheets = [
+    { season: 'Spring Summer 2024', image: '/placeholder.svg', isNew: true },
+    { season: 'Fall / Winter 2024', image: '/placeholder.svg', isNew: false },
+    { season: 'Resort 2024', image: '/placeholder.svg', isNew: true },
+    { season: 'Holiday 2023', image: '/placeholder.svg', isNew: false },
+    { season: 'Pre-Fall 2024 Collection with Extended Name', image: '/placeholder.svg', isNew: true },
   ]
 
   return (
@@ -143,6 +153,7 @@ export default async function BrandShowPage({ params }: { params: { slug: string
           <BrandCard brand={brand} />
           <ProductGallery productImages={productImages} />
           <BrandVideo video_url={brand.video_url} />
+          <BrandLinesheets linesheets={linesheets} />
         </div>
 
       </div>
@@ -162,17 +173,8 @@ export default async function BrandShowPage({ params }: { params: { slug: string
 //   const controls = useAnimation()
 //   const isInView = useInView(ratingRef, { once: true })
 
-//   const isLargeScreen = useMediaQuery({ query: '(min-width: 1024px)' })
-//   const isMediumScreen = useMediaQuery({ query: '(min-width: 768px)' })
 
 
-//   const linesheets = [
-//     { season: 'Spring Summer 2024', image: '/placeholder.svg', isNew: true },
-//     { season: 'Fall / Winter 2024', image: '/placeholder.svg', isNew: false },
-//     { season: 'Resort 2024', image: '/placeholder.svg', isNew: true },
-//     { season: 'Holiday 2023', image: '/placeholder.svg', isNew: false },
-//     { season: 'Pre-Fall 2024 Collection with Extended Name', image: '/placeholder.svg', isNew: true },
-//   ]
 
 //   const stockists = [
 //     { name: 'Nordstrom', location: 'New York, NY', type: 'Department Store' },
@@ -254,11 +256,6 @@ export default async function BrandShowPage({ params }: { params: { slug: string
 //     }
 //   }
 
-//   const getVisibleLinesheets = () => {
-//     if (isLargeScreen) return 4
-//     if (isMediumScreen) return 3
-//     return 2
-//   }
 
 //   return (
 //     <div className="max-w-[1200px] mx-auto bg-gray-100 p-4">
@@ -274,38 +271,6 @@ export default async function BrandShowPage({ params }: { params: { slug: string
 //           {/* Single Large Video Section */}
 
 //           {/* Linesheets */}
-//           <div ref={linesheetsRef} className="bg-white rounded-lg p-4 sm:p-6 mb-4 shadow">
-//             <h3 className="text-lg sm:text-xl font-semibold mb-4">Linesheets</h3>
-//             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4">
-//               {linesheets.slice(0, getVisibleLinesheets()).map((linesheet, i) => (
-//                 <Card key={i} className="overflow-hidden">
-//                   <div className="relative aspect-[3/4] bg-gray-200">
-//                     <Image
-//                       src={linesheet.image}
-//                       alt={`${linesheet.season} Linesheet`}
-//                       layout="fill"
-//                       objectFit="cover"
-//                     />
-//                     {linesheet.isNew && (
-//                       <Badge className="absolute top-2 right-2 bg-primary text-primary-foreground text-[10px] sm:text-xs">
-//                         New
-//                       </Badge>
-//                     )}
-//                   </div>
-//                   <CardContent className="p-2 sm:p-3 flex flex-col h-[120px] sm:h-[140px]">
-//                     <h4 className="font-semibold text-xs sm:text-sm mb-1 line-clamp-3 sm:line-clamp-2 h-12 sm:h-10">{linesheet.season}</h4>
-//                     <div className="flex items-center text-[10px] sm:text-xs text-gray-600 mb-2">
-//                       <Calendar className="w-3 h-3 mr-1" />
-//                       <span>Available now</span>
-//                     </div>
-//                     <Button variant="default" size="sm" className="w-full mt-auto text-[10px] sm:text-xs py-1 sm:py-2">
-//                       View Linesheets
-//                     </Button>
-//                   </CardContent>
-//                 </Card>
-//               ))}
-//             </div>
-//           </div>
 
 //           {/* Stockists */}
 //           <div ref={stockistsRef} className="bg-white rounded-lg p-6 mb-4 shadow">
