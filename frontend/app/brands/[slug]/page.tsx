@@ -19,6 +19,7 @@ import BrandVideo from '@/components/ui/brands/show/brand_video'
 import BrandLinesheets from '@/components/ui/brands/show/brand_linesheets'
 import Stockists from '@/components/ui/brands/show/stockists'
 import Rating from '@/components/ui/brands/show/rating'
+import Reviews from '@/components/ui/brands/show/reviews'
 
 async function getBrand(slug: string): Promise<Brand> {
   const pb = new PocketBase('http://127.0.0.1:8090');
@@ -78,6 +79,22 @@ export default async function BrandShowPage({ params }: { params: { slug: string
     { name: 'Price & Value', rating: 4.5, description: 'Considers the pricing in relation to the perceived value.' },
     { name: 'Customer Service', rating: 4.3, description: 'Rates the responsiveness and helpfulness of customer support.' },
     { name: 'Order & Delivery', rating: 4.6, description: 'Judges the efficiency and reliability of the ordering and delivery process.' },
+  ]
+
+  const reviews = [
+    {
+      initials: "CA",
+      name: "Chance A.",
+      role: "buyer",
+      details: "specialty retailer, 11 social",
+      location: "California, USA",
+      rating: 4,
+      date: "May 8th, 2024",
+      title: "TrendSetters Apparel: Stylish Choices with Seamless Delivery, Despite Slower Customer Service",
+      pros: "The range of styles and designs is fantastic. TrendSetters keeps up with fashion trends, and it's easy to find pieces that resonate with our customers' tastes. Additionally, their order and delivery process is seamless and reliable.",
+      cons: "The customer service could be more efficient. There were a couple of occasions where it took several days to get a response to inquiries, and resolving issues seemed slower than ideal.",
+      overall: "My overall experience with TrendSetters Apparel has been very positive. Despite some hiccups with customer service, the...",
+    }
   ]
 
   return (
@@ -178,23 +195,14 @@ export default async function BrandShowPage({ params }: { params: { slug: string
       </div>
 
       <Rating ratingCategories={ratingCategories} />
+      <Reviews reviews={reviews} />
     </div>
   )
 }
 
 // export default async function Component({ params }: { params: { slug: string } }) {
-//   const [isSaved, setIsSaved] = useState(false)
-//   const [isExpanded, setIsExpanded] = useState(false)
-//   const [animate, setAnimate] = useState(false)
 
-//   const linesheetsRef = useRef<HTMLDivElement>(null)
-//   const stockistsRef = useRef<HTMLDivElement>(null)
-
-
-
-
-
-  // useEffect(() => {
+// useEffect(() => {
 //     const handleScroll = () => {
 //       if (headerRef.current && window.innerWidth >= 768) {
 //         const headerRect = headerRef.current.getBoundingClientRect()
@@ -220,7 +228,6 @@ export default async function BrandShowPage({ params }: { params: { slug: string
 //     window.addEventListener('resize', updateVisibleImages)
 //     window.addEventListener('scroll', handleScroll)
 
-//     const timer = setTimeout(() => setAnimate(true), 500)
 
 //     return () => {
 //       window.removeEventListener('resize', updateVisibleImages)
@@ -255,45 +262,5 @@ export default async function BrandShowPage({ params }: { params: { slug: string
 
 
 //       {/* Customer Review */}
-//       <div className="bg-white rounded-lg p-4 shadow">
-//         <div className="flex items-start mb-4">
-//           <div className="bg-teal-800 text-white rounded-full w-10 h-10 flex items-center justify-center text-lg font-bold mr-3">
-//             CA
-//           </div>
-//           <div className="flex-grow">
-//             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
-//               <div>
-//                 <h3 className="font-semibold text-sm">Channa A.</h3>
-//                 <p className="text-xs text-gray-600">buyer</p>
-//                 <p className="text-xs text-gray-600">specialty retailer, 11 social</p>
-//                 <p className="text-xs text-gray-600">California, USA</p>
-//               </div>
-//               <div className="mt-2 sm:mt-0 sm:text-right">
-//                 <div className="flex">
-//                   {[...Array(5)].map((_, i) => (
-//                     <Star key={i} className={`h-4 w-4 ${i < 4 ? 'text-yellow-400' : 'text-gray-300'}`} fill="currentColor" />
-//                   ))}
-//                 </div>
-//                 <p className="text-xs text-gray-600">May 8th, 2024</p>
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//         <h4 className="font-semibold text-sm mb-2">"TrendSetters Apparel: Stylish Choices with Seamless Delivery, Despite Slower Customer Service"</h4>
-//         <div className="mb-2">
-//           <h5 className="font-semibold text-sm">pros: what did you like?</h5>
-//           <p className="text-xs text-gray-600">The range of styles and designs is fantastic. TrendSetters keeps up with fashion trends, and it's easy to find pieces that resonate with our customers' tastes. Additionally, their order and delivery process is seamless and reliable.</p>
-//         </div>
-//         <div className="mb-2">
-//           <h5 className="font-semibold text-sm">cons: what did you dislike?</h5>
-//           <p className="text-xs text-gray-600">The customer service could be more efficient. There were a couple of occasions where it took several days to get a response to inquiries, and resolving issues seemed slower than ideal.</p>
-//         </div>
-//         <div>
-//           <h5 className="font-semibold text-sm">overall: how was your experience?</h5>
-//           <p className="text-xs text-gray-600">My overall experience with TrendSetters Apparel has been very positive. Despite some hiccups with customer service, the...</p>
-//           <a href="#" className="text-xs text-teal-500">read more</a>
-//         </div>
-//       </div>
-//     </div>
 //   )
 // }
