@@ -10,13 +10,14 @@ import { motion, useAnimation, useInView } from 'framer-motion'
 import { useMediaQuery } from 'react-responsive'
 
 import PocketBase from 'pocketbase';
-
 import { Brand } from '@/models/Brand'
+
 import BrandHeader from '@/components/ui/brands/show/brand_header'
 import BrandCard from '@/components/ui/brands/show/brand_card'
 import ProductGallery from '@/components/ui/brands/show/product_gallery'
 import BrandVideo from '@/components/ui/brands/show/brand_video'
 import BrandLinesheets from '@/components/ui/brands/show/brand_linesheets'
+import Stockists from '@/components/ui/brands/show/stockists'
 
 async function getBrand(slug: string): Promise<Brand> {
   const pb = new PocketBase('http://127.0.0.1:8090');
@@ -59,6 +60,15 @@ export default async function BrandShowPage({ params }: { params: { slug: string
     { season: 'Resort 2024', image: '/placeholder.svg', isNew: true },
     { season: 'Holiday 2023', image: '/placeholder.svg', isNew: false },
     { season: 'Pre-Fall 2024 Collection with Extended Name', image: '/placeholder.svg', isNew: true },
+  ]
+
+  const stockists = [
+    { name: 'Nordstrom', location: 'New York, NY', type: 'Department Store' },
+    { name: 'Saks Fifth Avenue', location: 'Los Angeles, CA', type: 'Luxury Department Store' },
+    { name: 'Neiman Marcus', location: 'Chicago, IL', type: 'Luxury Department Store' },
+    { name: 'Bloomingdale\'s', location: 'Miami, FL', type: 'Department Store' },
+    { name: 'Shopbop', location: 'Online', type: 'E-commerce' },
+    { name: 'Net-a-Porter', location: 'Online', type: 'Luxury E-commerce' },
   ]
 
   return (
@@ -154,6 +164,7 @@ export default async function BrandShowPage({ params }: { params: { slug: string
           <ProductGallery productImages={productImages} />
           <BrandVideo video_url={brand.video_url} />
           <BrandLinesheets linesheets={linesheets} />
+          <Stockists stockists={stockists} />
         </div>
 
       </div>
@@ -175,15 +186,6 @@ export default async function BrandShowPage({ params }: { params: { slug: string
 
 
 
-
-//   const stockists = [
-//     { name: 'Nordstrom', location: 'New York, NY', type: 'Department Store' },
-//     { name: 'Saks Fifth Avenue', location: 'Los Angeles, CA', type: 'Luxury Department Store' },
-//     { name: 'Neiman Marcus', location: 'Chicago, IL', type: 'Luxury Department Store' },
-//     { name: 'Bloomingdale\'s', location: 'Miami, FL', type: 'Department Store' },
-//     { name: 'Shopbop', location: 'Online', type: 'E-commerce' },
-//     { name: 'Net-a-Porter', location: 'Online', type: 'Luxury E-commerce' },
-//   ]
 
 //   const ratingCategories = [
 //     { name: 'Product Quality', rating: 4.7, description: 'Assesses the overall quality and durability of the products.' },
@@ -273,30 +275,6 @@ export default async function BrandShowPage({ params }: { params: { slug: string
 //           {/* Linesheets */}
 
 //           {/* Stockists */}
-//           <div ref={stockistsRef} className="bg-white rounded-lg p-6 mb-4 shadow">
-//             <div className="flex justify-between items-center mb-4">
-//               <h3 className="text-xl font-semibold">Stockists</h3>
-//               <Button variant="outline">View All Stockists</Button>
-//             </div>
-//             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-//               {stockists.map((stockist, i) => (
-//                 <Card key={i}>
-//                   <CardContent className="p-4">
-//                     <Link href={`/stockists/${stockist.name.toLowerCase().replace(/\s+/g, '-')}`} className="block">
-//                       <h4 className="font-semibold text-lg mb-1">{stockist.name}</h4>
-//                       <div className="flex items-center text-sm text-gray-600 mb-1">
-//                         <MapPin className="w-4 h-4 mr-1" />
-//                         <span>{stockist.location}</span>
-//                       </div>
-//                       <p className="text-sm text-gray-500">{stockist.type}</p>
-//                     </Link>
-//                   </CardContent>
-//                 </Card>
-//               ))}
-//             </div>
-//           </div>
-//         </div>
-//       </div>
 
 //       {/* Overall Rating */}
 //       <div ref={ratingRef} className="bg-gradient-to-br from-white to-gray-50 rounded-lg p-6 shadow-lg relative overflow-hidden mb-4">
