@@ -11,7 +11,7 @@ import { useMediaQuery } from 'react-responsive'
 
 import { Brand } from '@/models/Brand'
 import BrandHeader from '@/components/ui/brands/show/brand_header'
-
+import BrandCard from '@/components/ui/brands/show/brand_card'
 import PocketBase from 'pocketbase';
 
 async function getBrand(slug: string): Promise<Brand> {
@@ -30,6 +30,13 @@ async function getBrand(slug: string): Promise<Brand> {
 
 export default async function BrandShowPage({ params }: { params: { slug: string } }) {
   const brand = await getBrand(params.slug);
+
+  const suggestedBrands = [
+    { name: 'LAGENCE', image: '/placeholder.svg' },
+    { name: 'ESSE', image: '/placeholder.svg' },
+    { name: 'CAES', image: '/placeholder.svg' },
+    { name: 'TOTEME', image: '/placeholder.svg' },
+  ]
 
   return (
     <div className="max-w-[1200px] mx-auto bg-gray-100 p-4">
@@ -57,8 +64,73 @@ export default async function BrandShowPage({ params }: { params: { slug: string
           </li>
         </ol>
       </nav>
-      
+
       <BrandHeader props={{ brand, isSaved: true }} />
+
+      <div className="flex flex-col md:flex-row gap-4">
+        {/* Mobile-first Right Column (will be on top for mobile) */}
+        <div className="md:w-1/3 md:order-2">
+          {/* Brand Profile Image */}
+          <div className="bg-white rounded-lg p-4 mb-4 shadow">
+            {/* Logo Image */}
+            <div className="w-2/3 mx-auto mb-4">
+              <div className="aspect-w-3 aspect-h-2 bg-gray-200 rounded-md overflow-hidden">
+                {/* <Image src="/placeholder.svg" alt="SECULAR logo" layout="fill" objectFit="contain" /> */}
+              </div>
+            </div>
+            {/* Brand Image */}
+            <div className="aspect-w-2 aspect-h-3 bg-gray-200 rounded-md overflow-hidden">
+              {/* <Image src="/placeholder.svg" alt="SECULAR brand profile" layout="fill" objectFit="cover" /> */}
+            </div>
+          </div>
+
+          {/* Message Brand */}
+          <Card className="mb-4">
+            <CardContent className="p-4">
+              <div className="flex items-center space-x-4">
+                <div className="bg-primary text-primary-foreground rounded-full p-2 flex-shrink-0">
+                  <MessageCircle className="h-5 w-5" />
+                </div>
+                <div className="flex-grow">
+                  <p className="font-semibold text-sm">SECULAR Wholesale</p>
+                  <p className="text-xs text-muted-foreground">5 unread messages</p>
+                </div>
+                <Button variant="outline" size="sm" className="flex-shrink-0 whitespace-nowrap">
+                  Contact
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Suggested Brands */}
+          <Card className="mb-4">
+            <CardContent className="p-4">
+              <h3 className="text-lg font-semibold mb-3">Suggested Brands</h3>
+              <div className="grid grid-cols-2 gap-3">
+                {suggestedBrands.map((brand, index) => (
+                  <div key={index} className="flex flex-col items-center">
+                    <div className="aspect-w-3 aspect-h-4 w-full mb-2">
+                      {/* <Image
+                        src={brand.image}
+                        alt={brand.name}
+                        layout="fill"
+                        objectFit="cover"
+                        className="rounded-md"
+                      /> */}
+                    </div>
+                    <p className="text-sm font-medium text-center truncate w-full">{brand.name}</p>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="md:w-2/3 md:order-1">
+          <BrandCard brand={brand} />
+        </div>
+
+      </div>
     </div>
   )
 }
@@ -68,7 +140,6 @@ export default async function BrandShowPage({ params }: { params: { slug: string
 //   const [currentImageIndex, setCurrentImageIndex] = useState(0)
 //   const [visibleImages, setVisibleImages] = useState(4)
 //   const [isExpanded, setIsExpanded] = useState(false)
-//   const [activeTab, setActiveTab] = useState('brand-info')
 //   const [animate, setAnimate] = useState(false)
 
 //   const galleryRef = useRef<HTMLDivElement>(null)
@@ -95,13 +166,6 @@ export default async function BrandShowPage({ params }: { params: { slug: string
 //     '/placeholder.svg',
 //   ]
 
-//   const suggestedBrands = [
-//     { name: 'LAGENCE', image: '/placeholder.svg' },
-//     { name: 'ESSE', image: '/placeholder.svg' },
-//     { name: 'CAES', image: '/placeholder.svg' },
-//     { name: 'TOTEME', image: '/placeholder.svg' },
-//   ]
-
 //   const linesheets = [
 //     { season: 'Spring Summer 2024', image: '/placeholder.svg', isNew: true },
 //     { season: 'Fall / Winter 2024', image: '/placeholder.svg', isNew: false },
@@ -117,14 +181,6 @@ export default async function BrandShowPage({ params }: { params: { slug: string
 //     { name: 'Bloomingdale\'s', location: 'Miami, FL', type: 'Department Store' },
 //     { name: 'Shopbop', location: 'Online', type: 'E-commerce' },
 //     { name: 'Net-a-Porter', location: 'Online', type: 'Luxury E-commerce' },
-//   ]
-
-//   const navigationTabs = [
-//     { id: 'brand-info', label: 'Brand Information', ref: brandInfoRef },
-//     { id: 'product-gallery', label: 'Product Gallery', ref: productGalleryRef },
-//     { id: 'linesheets', label: 'Linesheets', ref: linesheetsRef },
-//     { id: 'stockists', label: 'Stockists', ref: stockistsRef },
-//     { id: 'reviews', label: 'Reviews', ref: reviewsRef },
 //   ]
 
 //   const ratingCategories = [
@@ -234,140 +290,9 @@ export default async function BrandShowPage({ params }: { params: { slug: string
 //       </div>
 
 
-//       {/* Main Content */}
-//       <div className="flex flex-col md:flex-row gap-4">
-//         {/* Mobile-first Right Column (will be on top for mobile) */}
-//         <div className="md:w-1/3 md:order-2">
-//           {/* Brand Profile Image */}
-//           <div className="bg-white rounded-lg p-4 mb-4 shadow">
-//             {/* Logo Image */}
-//             <div className="w-2/3 mx-auto mb-4">
-//               <div className="aspect-w-3 aspect-h-2 bg-gray-200 rounded-md overflow-hidden">
-//                 <Image src="/placeholder.svg" alt="SECULAR logo" layout="fill" objectFit="contain" />
-//               </div>
-//             </div>
-//             {/* Brand Image */}
-//             <div className="aspect-w-2 aspect-h-3 bg-gray-200 rounded-md overflow-hidden">
-//               <Image src="/placeholder.svg" alt="SECULAR brand profile" layout="fill" objectFit="cover" />
-//             </div>
-//           </div>
+{/* Main Content */ }
 
-//           {/* Message Brand */}
-//           <Card className="mb-4">
-//             <CardContent className="p-4">
-//               <div className="flex items-center space-x-4">
-//                 <div className="bg-primary text-primary-foreground rounded-full p-2 flex-shrink-0">
-//                   <MessageCircle className="h-5 w-5" />
-//                 </div>
-//                 <div className="flex-grow">
-//                   <p className="font-semibold text-sm">SECULAR Wholesale</p>
-//                   <p className="text-xs text-muted-foreground">5 unread messages</p>
-//                 </div>
-//                 <Button variant="outline" size="sm" className="flex-shrink-0 whitespace-nowrap">
-//                   Contact
-//                 </Button>
-//               </div>
-//             </CardContent>
-//           </Card>
-
-//           {/* Suggested Brands */}
-//           <Card className="mb-4">
-//             <CardContent className="p-4">
-//               <h3 className="text-lg font-semibold mb-3">Suggested Brands</h3>
-//               <div className="grid grid-cols-2 gap-3">
-//                 {suggestedBrands.map((brand, index) => (
-//                   <div key={index} className="flex flex-col items-center">
-//                     <div className="aspect-w-3 aspect-h-4 w-full mb-2">
-//                       <Image
-//                         src={brand.image}
-//                         alt={brand.name}
-//                         layout="fill"
-//                         objectFit="cover"
-//                         className="rounded-md"
-//                       />
-//                     </div>
-//                     <p className="text-sm font-medium text-center truncate w-full">{brand.name}</p>
-//                   </div>
-//                 ))}
-//               </div>
-//             </CardContent>
-//           </Card>
-//         </div>
-
-//         {/* Left Column */}
-//         <div className="md:w-2/3 md:order-1">
-//           {/* Brand Information */}
-//           <div ref={brandInfoRef} className="bg-white rounded-lg p-4 mb-4 shadow">
-//             <h3 className="text-lg font-semibold mb-2">SECULAR brand wholesale information & reviews</h3>
-//             <p className="text-sm text-gray-600 mb-4">
-//               Inspired by her surroundings and constantly inspired, named SECULAR to rebel against the rules of the traditional
-//               fashion industry cycle of production. We buy less fabric from Italy and Japan in natural fibers. We develop our original
-//               prints in-house and work with local Los Angeles factories to create beautiful... <a href="#" className="text-teal-500">read more</a>
-//             </p>
-//             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-sm">
-//               <div>
-//                 <h4 className="font-semibold">website</h4>
-//                 <p className="text-gray-600">secularclothing.com</p>
-//               </div>
-//               <div>
-//                 <h4 className="font-semibold">company</h4>
-//                 <p className="text-gray-600">SECULAR</p>
-//               </div>
-//               <div>
-//                 <h4 className="font-semibold">retail price</h4>
-//                 <p className="text-gray-600">$200-$500</p>
-//               </div>
-//               <div>
-//                 <h4 className="font-semibold">headquarters</h4>
-//                 <p className="text-gray-600">Los Angeles, CA, USA</p>
-//               </div>
-//               <div>
-//                 <h4 className="font-semibold">founded</h4>
-//                 <p className="text-gray-600">2018</p>
-//               </div>
-//               <div>
-//                 <h4 className="font-semibold">product categories</h4>
-//                 <p className="text-gray-600">Dresses, Tops, Bottoms</p>
-//               </div>
-//             </div>
-//             <div className="mt-4">
-//               <Button
-//                 variant="ghost"
-//                 size="sm"
-//                 onClick={toggleExpand}
-//                 className="flex items-center text-teal-500 hover:text-teal-600 transition-colors duration-200"
-//                 aria-expanded={isExpanded}
-//                 aria-controls="more-info"
-//               >
-//                 {isExpanded ? 'View less' : 'View more'}
-//                 {isExpanded ? (
-//                   <ChevronUp className="ml-1 h-4 w-4" />
-//                 ) : (
-//                   <ChevronDown className="ml-1 h-4 w-4" />
-//                 )}
-//               </Button>
-//               {isExpanded && (
-//                 <div id="more-info" className="mt-4 text-sm text-gray-600">
-//                   <h4 className="font-semibold mb-2">About SECULAR</h4>
-//                   <p className="mb-2">
-//                     SECULAR is a contemporary women's fashion brand that focuses on sustainable and ethical production practices.
-//                     Founded in 2018 by designer Sarah Chen, the brand aims to create timeless pieces that transcend seasonal trends.
-//                   </p>
-//                   <h4 className="font-semibold mb-2">Production</h4>
-//                   <p className="mb-2">
-//                     All SECULAR garments are produced in small batches in Los Angeles, California. The brand works closely with local
-//                     artisans and uses eco-friendly fabrics sourced from Italy and Japan.
-//                   </p>
-//                   <h4 className="font-semibold mb-2">Design Philosophy</h4>
-//                   <p>
-//                     SECULAR's designs are characterized by clean lines, minimalist aesthetics, and versatile silhouettes. The brand
-//                     focuses on creating pieces that can be easily mixed and matched, promoting a more sustainable approach to fashion.
-//                   </p>
-//                 </div>
-//               )}
-//             </div>
-//           </div>
-
+{/* Left Column */ }
 //           {/* Product Gallery */}
 //           <div ref={productGalleryRef} className="bg-white rounded-lg p-4 mb-4 shadow">
 //             <h3 className="text-lg font-semibold mb-2">product gallery</h3>
