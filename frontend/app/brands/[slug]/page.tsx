@@ -15,7 +15,7 @@ import { Brand } from '@/models/Brand'
 import BrandHeader from '@/components/ui/brands/show/brand_header'
 import BrandCard from '@/components/ui/brands/show/brand_card'
 import ProductGallery from '@/components/ui/brands/show/product_gallery'
-
+import BrandVideo from '@/components/ui/brands/show/brand_video'
 async function getBrand(slug: string): Promise<Brand> {
   const pb = new PocketBase('http://127.0.0.1:8090');
 
@@ -142,6 +142,7 @@ export default async function BrandShowPage({ params }: { params: { slug: string
         <div className="md:w-2/3 md:order-1">
           <BrandCard brand={brand} />
           <ProductGallery productImages={productImages} />
+          <BrandVideo video_url={brand.video_url} />
         </div>
 
       </div>
@@ -271,16 +272,6 @@ export default async function BrandShowPage({ params }: { params: { slug: string
           {/* Product Gallery */}
 
 //           {/* Single Large Video Section */}
-//           <div className="bg-white rounded-lg p-4 mb-4 shadow">
-//             <div className="relative w-full" style={{ paddingBottom: '56.25%', height: 0 }}>
-//               <div className="absolute top-0 left-0 w-full h-full bg-gray-200 rounded-md overflow-hidden flex items-center justify-center">
-//                 <Button variant="outline" size="icon" className="w-16 h-16 rounded-full">
-//                   <Play className="h-8 w-8" />
-//                   <span className="sr-only">Play video</span>
-//                 </Button>
-//               </div>
-//             </div>
-//           </div>
 
 //           {/* Linesheets */}
 //           <div ref={linesheetsRef} className="bg-white rounded-lg p-4 sm:p-6 mb-4 shadow">
