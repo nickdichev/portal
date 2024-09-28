@@ -9,10 +9,12 @@ import Link from 'next/link'
 import { motion, useAnimation, useInView } from 'framer-motion'
 import { useMediaQuery } from 'react-responsive'
 
+import PocketBase from 'pocketbase';
+
 import { Brand } from '@/models/Brand'
 import BrandHeader from '@/components/ui/brands/show/brand_header'
 import BrandCard from '@/components/ui/brands/show/brand_card'
-import PocketBase from 'pocketbase';
+import ProductGallery from '@/components/ui/brands/show/product_gallery'
 
 async function getBrand(slug: string): Promise<Brand> {
   const pb = new PocketBase('http://127.0.0.1:8090');
@@ -36,6 +38,17 @@ export default async function BrandShowPage({ params }: { params: { slug: string
     { name: 'ESSE', image: '/placeholder.svg' },
     { name: 'CAES', image: '/placeholder.svg' },
     { name: 'TOTEME', image: '/placeholder.svg' },
+  ]
+
+  const productImages = [
+    '/placeholder.svg',
+    '/placeholder.svg',
+    '/placeholder.svg',
+    '/placeholder.svg',
+    '/placeholder.svg',
+    '/placeholder.svg',
+    '/placeholder.svg',
+    '/placeholder.svg',
   ]
 
   return (
@@ -128,6 +141,7 @@ export default async function BrandShowPage({ params }: { params: { slug: string
 
         <div className="md:w-2/3 md:order-1">
           <BrandCard brand={brand} />
+          <ProductGallery productImages={productImages} />
         </div>
 
       </div>
@@ -137,14 +151,9 @@ export default async function BrandShowPage({ params }: { params: { slug: string
 
 // export default async function Component({ params }: { params: { slug: string } }) {
 //   const [isSaved, setIsSaved] = useState(false)
-//   const [currentImageIndex, setCurrentImageIndex] = useState(0)
-//   const [visibleImages, setVisibleImages] = useState(4)
 //   const [isExpanded, setIsExpanded] = useState(false)
 //   const [animate, setAnimate] = useState(false)
 
-//   const galleryRef = useRef<HTMLDivElement>(null)
-//   const brandInfoRef = useRef<HTMLDivElement>(null)
-//   const productGalleryRef = useRef<HTMLDivElement>(null)
 //   const linesheetsRef = useRef<HTMLDivElement>(null)
 //   const stockistsRef = useRef<HTMLDivElement>(null)
 //   const reviewsRef = useRef<HTMLDivElement>(null)
@@ -155,16 +164,6 @@ export default async function BrandShowPage({ params }: { params: { slug: string
 //   const isLargeScreen = useMediaQuery({ query: '(min-width: 1024px)' })
 //   const isMediumScreen = useMediaQuery({ query: '(min-width: 768px)' })
 
-//   const productImages = [
-//     '/placeholder.svg',
-//     '/placeholder.svg',
-//     '/placeholder.svg',
-//     '/placeholder.svg',
-//     '/placeholder.svg',
-//     '/placeholder.svg',
-//     '/placeholder.svg',
-//     '/placeholder.svg',
-//   ]
 
 //   const linesheets = [
 //     { season: 'Spring Summer 2024', image: '/placeholder.svg', isNew: true },
@@ -198,16 +197,7 @@ export default async function BrandShowPage({ params }: { params: { slug: string
 
 //   const overallRating = calculateOverallRating(ratingCategories)
 
-//   useEffect(() => {
-//     const updateVisibleImages = () => {
-//       if (galleryRef.current) {
-//         const galleryWidth = galleryRef.current.offsetWidth
-//         const imageWidth = 150 // Approximate width of each image including gap
-//         const newVisibleImages = Math.floor(galleryWidth / imageWidth)
-//         setVisibleImages(newVisibleImages)
-//       }
-//     }
-
+  // useEffect(() => {
 //     const handleScroll = () => {
 //       if (headerRef.current && window.innerWidth >= 768) {
 //         const headerRect = headerRef.current.getBoundingClientRect()
@@ -248,18 +238,6 @@ export default async function BrandShowPage({ params }: { params: { slug: string
 //     }
 //   }, [controls, isInView])
 
-//   const nextImage = () => {
-//     setCurrentImageIndex((prevIndex) =>
-//       (prevIndex + visibleImages >= productImages.length) ? 0 : prevIndex + visibleImages
-//     )
-//   }
-
-//   const prevImage = () => {
-//     setCurrentImageIndex((prevIndex) =>
-//       (prevIndex - visibleImages < 0) ? Math.max(productImages.length - visibleImages, 0) : prevIndex - visibleImages
-//     )
-//   }
-
 //   const toggleExpand = () => {
 //     setIsExpanded(!isExpanded)
 //   }
@@ -290,51 +268,7 @@ export default async function BrandShowPage({ params }: { params: { slug: string
 //       </div>
 
 
-{/* Main Content */ }
-
-{/* Left Column */ }
-//           {/* Product Gallery */}
-//           <div ref={productGalleryRef} className="bg-white rounded-lg p-4 mb-4 shadow">
-//             <h3 className="text-lg font-semibold mb-2">product gallery</h3>
-//             <div className="relative" ref={galleryRef}>
-//               <div className="flex overflow-hidden">
-//                 <div
-//                   className="flex transition-transform duration-300 ease-in-out"
-//                   style={{ transform: `translateX(-${currentImageIndex * 100 / visibleImages}%)` }}
-//                 >
-//                   {productImages.map((src, i) => (
-//                     <div key={i} className="w-1/4 flex-shrink-0 p-1">
-//                       <div className="aspect-w-1 aspect-h-1 bg-gray-200 rounded-md overflow-hidden">
-//                         <Image src={src} alt={`Product ${i + 1}`} layout="fill" objectFit="cover" />
-//                       </div>
-//                     </div>
-//                   ))}
-//                 </div>
-//               </div>
-//               {productImages.length > visibleImages && (
-//                 <>
-//                   <Button
-//                     variant="ghost"
-//                     size="icon"
-//                     onClick={prevImage}
-//                     className="absolute left-0 top-1/2 transform -translate-y-1/2"
-//                     aria-label="Previous image"
-//                   >
-//                     <ChevronLeft className="h-6 w-6" />
-//                   </Button>
-//                   <Button
-//                     variant="ghost"
-//                     size="icon"
-//                     onClick={nextImage}
-//                     className="absolute right-0 top-1/2 transform -translate-y-1/2"
-//                     aria-label="Next image"
-//                   >
-//                     <ChevronRightIcon className="h-6 w-6" />
-//                   </Button>
-//                 </>
-//               )}
-//             </div>
-//           </div>
+          {/* Product Gallery */}
 
 //           {/* Single Large Video Section */}
 //           <div className="bg-white rounded-lg p-4 mb-4 shadow">
