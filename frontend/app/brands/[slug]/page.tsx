@@ -124,6 +124,11 @@ export default async function BrandShowPage({ params }: { params: { slug: string
         </ol>
       </nav>
 
+      {/* Image Carousel */}
+      <div className="relative mb-4 h-48 sm:h-64 bg-gray-200 rounded-lg overflow-hidden">
+        <Image src="/placeholder.svg" alt="Fashion model" layout="fill" objectFit="cover" />
+      </div>
+
       <BrandHeader props={{ brand, isSaved: true }} />
 
       <div className="flex flex-col md:flex-row gap-4">
@@ -199,68 +204,3 @@ export default async function BrandShowPage({ params }: { params: { slug: string
     </div>
   )
 }
-
-// export default async function Component({ params }: { params: { slug: string } }) {
-
-// useEffect(() => {
-//     const handleScroll = () => {
-//       if (headerRef.current && window.innerWidth >= 768) {
-//         const headerRect = headerRef.current.getBoundingClientRect()
-//         const headerTop = headerRef.current.offsetTop
-//         setIsSticky(window.scrollY > headerTop && headerRect.top <= 0)
-//       } else {
-//         setIsSticky(false)
-//       }
-
-//       const scrollPosition = window.scrollY + 100
-
-//       navigationTabs.forEach(tab => {
-//         if (tab.ref.current) {
-//           const element = tab.ref.current
-//           if (element.offsetTop <= scrollPosition && element.offsetTop + element.offsetHeight > scrollPosition) {
-//             setActiveTab(tab.id)
-//           }
-//         }
-//       })
-//     }
-
-//     updateVisibleImages()
-//     window.addEventListener('resize', updateVisibleImages)
-//     window.addEventListener('scroll', handleScroll)
-
-
-//     return () => {
-//       window.removeEventListener('resize', updateVisibleImages)
-//       window.removeEventListener('scroll', handleScroll)
-//       clearTimeout(timer)
-//     }
-//   }, [])
-
-
-//   const toggleExpand = () => {
-//     setIsExpanded(!isExpanded)
-//   }
-
-//   const toggleSave = () => {
-//     setIsSaved(!isSaved)
-//   }
-
-//   const scrollToSection = (id: string) => {
-//     const tab = navigationTabs.find(tab => tab.id === id)
-//     if (tab && tab.ref.current) {
-//       tab.ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
-//     }
-//   }
-
-
-//   return (
-
-//       {/* Image Carousel */}
-//       <div className="relative mb-4 h-48 sm:h-64 bg-gray-200 rounded-lg overflow-hidden">
-//         <Image src="/placeholder.svg" alt="Fashion model" layout="fill" objectFit="cover" />
-//       </div>
-
-
-//       {/* Customer Review */}
-//   )
-// }

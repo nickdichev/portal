@@ -12,16 +12,24 @@ export default function ProductGallery({ productImages }: { productImages: strin
     const [currentImageIndex, setCurrentImageIndex] = useState(0)
     const [visibleImages, setVisibleImages] = useState(4)
 
+
     useEffect(() => {
         const updateVisibleImages = () => {
-            if (galleryRef.current) {
-                const galleryWidth = galleryRef.current.offsetWidth
-                const imageWidth = 150 // Approximate width of each image including gap
-                const newVisibleImages = Math.floor(galleryWidth / imageWidth)
-                setVisibleImages(newVisibleImages)
-            }
+          if (galleryRef.current) {
+            const galleryWidth = galleryRef.current.offsetWidth
+            const imageWidth = 150 // Approximate width of each image including gap
+            const newVisibleImages = Math.floor(galleryWidth / imageWidth)
+            setVisibleImages(newVisibleImages)
+          }
         }
-    })
+    
+        updateVisibleImages()
+        window.addEventListener('resize', updateVisibleImages)
+    
+        return () => {
+          window.removeEventListener('resize', updateVisibleImages)
+        }
+      }, [])
 
     const nextImage = () => {
         setCurrentImageIndex((prevIndex) =>
