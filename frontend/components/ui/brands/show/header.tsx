@@ -8,14 +8,21 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { Heart, Flag, Star } from 'lucide-react'
 import Link from 'next/link'
 
-export default function Header({ props }: { props: { brand: object, isSaved: boolean } }) {
+import { Brand } from '@/models/Brand'
+
+export default function Header({ props }: { props: { brand: Brand, isSaved: boolean } }) {
     const { brand, isSaved } = props
 
     const headerRef = useRef<HTMLDivElement>(null)
     const [isSticky, setIsSticky] = useState(false)
     const [activeTab, setActiveTab] = useState('brand-info')
 
-    const navigationTabs = useMemo(() => [
+    type NavigationTab = {
+        id: string;
+        label: string;
+    };
+
+    const navigationTabs: NavigationTab[] = useMemo(() => [
         { id: 'brand-info', label: 'Brand Information' },
         { id: 'product-gallery', label: 'Product Gallery' },
         { id: 'linesheets', label: 'Linesheets' },
@@ -117,7 +124,7 @@ export default function Header({ props }: { props: { brand: object, isSaved: boo
                 {/* Navigation Tabs */}
                 <div className={`mt-4 ${isSticky ? 'md:mt-2' : ''}`}>
                     <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 sm:gap-0">
-                        {navigationTabs.map((tab: object) => (
+                        {navigationTabs.map((tab: NavigationTab) => (
                             <Button
                                 key={tab.id}
                                 variant="ghost"

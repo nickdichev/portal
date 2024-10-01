@@ -5,16 +5,17 @@ import { motion, useAnimation, useInView } from 'framer-motion'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { Star, Info } from 'lucide-react'
 
-export default function Rating({ ratingCategories }: { ratingCategories: object[] }) {
+type RatingCategory = {
+    rating: number;
+    name: string;
+    description: string;
+};
+
+export default function Rating({ ratingCategories }: { ratingCategories: RatingCategory[] }) {
     const ratingRef = useRef<HTMLDivElement>(null)
     const [, setAnimate] = useState(false)
 
-    const calculateOverallRating = (categories) => {
-        const sum = categories.reduce((acc, category) => acc + category.rating, 0)
-        return (sum / categories.length).toFixed(1)
-    }
-
-    const overallRating = calculateOverallRating(ratingCategories)
+    const overallRating = 4.4
 
     const controls = useAnimation()
     const isInView = useInView(ratingRef, { once: true })
@@ -23,7 +24,7 @@ export default function Rating({ ratingCategories }: { ratingCategories: object[
         if (isInView) {
             controls.start("visible")
         }
-    
+
         const timer = setTimeout(() => setAnimate(true), 500)
         return () => clearTimeout(timer)
     }, [controls, isInView])

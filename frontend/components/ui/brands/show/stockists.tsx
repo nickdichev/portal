@@ -2,7 +2,14 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { MapPin } from "lucide-react"
-export default function Stockists({ stockists }: { stockists: object[] }) {
+
+type Stockist = {
+    name: string;
+    location: string;
+    type: string;
+};
+
+export default function Stockists({ stockists }: { stockists: Stockist[] }) {
     return (
         <div id="stockists" className="bg-white rounded-lg p-6 mb-4 shadow">
             <div className="flex justify-between items-center mb-4">

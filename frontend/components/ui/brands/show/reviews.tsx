@@ -1,8 +1,23 @@
 import { Star } from 'lucide-react'
+
+type Review = {
+    initials: string;
+    name: string;
+    role: string;
+    details: string;
+    location: string;
+    rating: number;
+    date: string;
+    title: string;
+    pros: string;
+    cons: string;
+    overall: string;
+};
+
 export default function Reviews({ reviews }: { reviews: object[] }) {
     return (
         <div className="bg-white rounded-lg p-4 shadow">
-            {reviews.map((review: object, index: number) => (
+            {(reviews as Review[]).map((review: Review, index: number) => (
                 <div key={index} className={`${index > 0 ? 'mt-8 pt-8 border-t border-gray-200' : ''}`}>
                     <div className="flex items-start mb-4">
                         <div className="bg-teal-800 text-white rounded-full w-10 h-10 flex items-center justify-center text-lg font-bold mr-3">
