@@ -31,7 +31,7 @@ export default function Linesheets({ linesheets }: { linesheets: object[] }) {
     <div id="linesheets" className="bg-white rounded-lg p-4 sm:p-6 mb-4 shadow">
       <h3 className="text-lg sm:text-xl font-semibold mb-4">Linesheets</h3>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4">
-        {linesheets.slice(0, visibleLinesheets).map((linesheet: any, i: number) => (
+        {linesheets.slice(0, visibleLinesheets).map((linesheet: object, i: number) => (
           <Card key={i} className="overflow-hidden">
             <div className="relative aspect-[3/4] bg-gray-200">
               <Image

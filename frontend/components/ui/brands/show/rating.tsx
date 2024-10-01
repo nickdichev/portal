@@ -7,8 +7,7 @@ import { Star, Info } from 'lucide-react'
 
 export default function Rating({ ratingCategories }: { ratingCategories: object[] }) {
     const ratingRef = useRef<HTMLDivElement>(null)
-    const reviewsRef = useRef<HTMLDivElement>(null)
-    const [animate, setAnimate] = useState(false)
+    const [, setAnimate] = useState(false)
 
     const calculateOverallRating = (categories) => {
         const sum = categories.reduce((acc, category) => acc + category.rating, 0)
@@ -19,12 +18,14 @@ export default function Rating({ ratingCategories }: { ratingCategories: object[
 
     const controls = useAnimation()
     const isInView = useInView(ratingRef, { once: true })
-    const timer = setTimeout(() => setAnimate(true), 500)
 
     useEffect(() => {
         if (isInView) {
             controls.start("visible")
         }
+    
+        const timer = setTimeout(() => setAnimate(true), 500)
+        return () => clearTimeout(timer)
     }, [controls, isInView])
 
     return (

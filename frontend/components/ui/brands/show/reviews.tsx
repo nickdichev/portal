@@ -2,7 +2,7 @@ import { Star } from 'lucide-react'
 export default function Reviews({ reviews }: { reviews: object[] }) {
     return (
         <div className="bg-white rounded-lg p-4 shadow">
-            {reviews.map((review: any, index: number) => (
+            {reviews.map((review: object, index: number) => (
                 <div key={index} className={`${index > 0 ? 'mt-8 pt-8 border-t border-gray-200' : ''}`}>
                     <div className="flex items-start mb-4">
                         <div className="bg-teal-800 text-white rounded-full w-10 h-10 flex items-center justify-center text-lg font-bold mr-3">
@@ -27,7 +27,7 @@ export default function Reviews({ reviews }: { reviews: object[] }) {
                             </div>
                         </div>
                     </div>
-                    <h4 className="font-semibold text-sm mb-2">"{review.title}"</h4>
+                    <h4 className="font-semibold text-sm mb-2">&quot;{review.title}&quot;</h4>
                     <div className="mb-2">
                         <h5 className="font-semibold text-sm">pros: what did you like?</h5>
                         <p className="text-xs text-gray-600">{review.pros}</p>

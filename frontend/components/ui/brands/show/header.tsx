@@ -1,11 +1,12 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 
 import { Button } from "@/components/ui/button"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { Heart, Flag, Star } from 'lucide-react'
+import Link from 'next/link'
 
 export default function Header({ props }: { props: { brand: object, isSaved: boolean } }) {
     const { brand, isSaved } = props
@@ -14,13 +15,13 @@ export default function Header({ props }: { props: { brand: object, isSaved: boo
     const [isSticky, setIsSticky] = useState(false)
     const [activeTab, setActiveTab] = useState('brand-info')
 
-    const navigationTabs = [
+    const navigationTabs = useMemo(() => [
         { id: 'brand-info', label: 'Brand Information' },
         { id: 'product-gallery', label: 'Product Gallery' },
         { id: 'linesheets', label: 'Linesheets' },
         { id: 'stockists', label: 'Stockists' },
         { id: 'reviews', label: 'Reviews' },
-    ]
+    ], []);
 
     const router = useRouter()
 
@@ -60,7 +61,7 @@ export default function Header({ props }: { props: { brand: object, isSaved: boo
         return () => {
           window.removeEventListener('scroll', handleScroll)
         }
-      }, [])
+      }, [navigationTabs])
 
         const toggleSave = () => { }
 
@@ -85,9 +86,11 @@ export default function Header({ props }: { props: { brand: object, isSaved: boo
                                 {isSaved ? 'Saved' : 'Save'}
                             </Button>
                         )}
-                        <Button variant="default" className={`w-full sm:w-auto ${isSticky ? 'md:text-sm md:py-1' : ''}`}>
-                            Visit Website
-                        </Button>
+                        <Link href={brand?.website || '#'} target="_blank" rel="noopener noreferrer">
+                            <Button variant="default" className={`w-full sm:w-auto ${isSticky ? 'md:text-sm md:py-1' : ''}`}>
+                                Visit Website
+                            </Button>
+                        </Link>
                         <Button variant="default" className={`w-full sm:w-auto ${isSticky ? 'md:text-sm md:py-1' : ''}`}>
                             Request Linesheets
                         </Button>
@@ -114,7 +117,7 @@ export default function Header({ props }: { props: { brand: object, isSaved: boo
                 {/* Navigation Tabs */}
                 <div className={`mt-4 ${isSticky ? 'md:mt-2' : ''}`}>
                     <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 sm:gap-0">
-                        {navigationTabs.map((tab: any) => (
+                        {navigationTabs.map((tab: object) => (
                             <Button
                                 key={tab.id}
                                 variant="ghost"
@@ -139,7 +142,7 @@ export default function Header({ props }: { props: { brand: object, isSaved: boo
                                     </Button>
                                 </TooltipTrigger>
                                 <TooltipContent side="bottom" align="end" className="w-64 sm:w-80">
-                                    <p className="text-sm">Is this your brand's profile? Click here to claim your listing to update the content and reply to buyer's inquiries</p>
+                                    <p className="text-sm">Is this your brand&apos;s profile? Click here to claim your listing to update the content and reply to buyer&apos;s inquiries</p>
                                 </TooltipContent>
                             </Tooltip>
                         </TooltipProvider>

@@ -25,7 +25,7 @@ async function getBrand(slug: string): Promise<Brand> {
     });
 
     return record as unknown as Brand;
-  } catch (error) {
+  } catch {
     throw new Error(`Brand with slug "${slug}" not found`)
   }
 }
