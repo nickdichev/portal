@@ -1,13 +1,8 @@
 import Image from 'next/image'
-import { Star, ChevronRight, ChevronLeft, ChevronRight as ChevronRightIcon, ChevronDown, ChevronUp, Heart, Flag, Play, MessageCircle, Calendar, MapPin, Info } from 'lucide-react'
-import { useState, useEffect, useRef } from 'react'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { ChevronRight, MessageCircle } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import Link from 'next/link'
-import { motion, useAnimation, useInView } from 'framer-motion'
-import { useMediaQuery } from 'react-responsive'
 
 import PocketBase from 'pocketbase';
 import { Brand } from '@/models/Brand'

@@ -17,6 +17,7 @@ export interface Brand {
     year_established?: number;
     price_range_low?: number;
     price_range_high?: number;
+    video_url?: string;
     expand?: {
         categories?: Category[];
     };
