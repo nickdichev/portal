@@ -1,5 +1,4 @@
 import React from 'react'
-import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Search, ArrowRight, Menu, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react'
@@ -56,24 +55,6 @@ export default function Component() {
 
   return (
     <>
-      {/* Head component for setting meta tags and SEO information */}
-      {/* These meta tags are crucial for SEO and social media sharing */}
-      <Head>
-        <title>Portal Wholesale - Connect Fashion Buyers and Brands</title>
-        <meta name="description" content="Portal Wholesale is the premier platform connecting fashion buyers and wholesale brands. Discover, connect, and grow your fashion business." />
-        <meta name="robots" content="noindex, nofollow" />
-        <meta name="keywords" content="fashion wholesale, buyer platform, brand discovery, wholesale marketplace" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="canonical" href="https://www.portalwholesale.com" />
-        {/* Open Graph tags for better social media sharing */}
-        <meta property="og:title" content="Portal Wholesale - Connect Fashion Buyers and Brands" />
-        <meta property="og:description" content="Discover and connect with top fashion wholesale brands on Portal Wholesale. Streamline your buying process and grow your business." />
-        <meta property="og:image" content="https://www.portalwholesale.com/og-image.jpg" />
-        <meta property="og:url" content="https://www.portalwholesale.com" />
-        <meta name="twitter:card" content="summary_large_image" />
-        {/* TODO: SEO - Consider adding structured data for rich snippets */}
-        {/* TODO: Backend Dev - Implement dynamic meta tags based on page content */}
-      </Head>
 
       {/* Main container for the entire page */}
       {/* The gradient background creates a subtle, professional look */}
