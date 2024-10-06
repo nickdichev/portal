@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import Link from 'next/link'
 
-import { Brand } from '@/models/Brand'
+import { Brand, BrandRating } from '@/models/Brand'
 
 import Header from '@/components/ui/brands/show/header'
 import InfoCard from '@/components/ui/brands/show/info_card'
@@ -25,16 +25,26 @@ async function getBrand(slug: string): Promise<Brand> {
       expand: 'categories,reviews',
     });
 
-    console.log(record)
-
     return record as unknown as Brand;
   } catch {
     throw new Error(`Brand with slug "${slug}" not found`)
   }
 }
 
+async function getBrandRating(brandId: string): Promise<BrandRating> {
+  const pb = getPocketBase();
+
+  try {
+    const record = await pb.collection('brand_ratings').getOne(brandId);
+    return record as unknown as BrandRating;
+  } catch {
+    throw new Error(`Rating for brand with id "${brandId}" not found`)
+  }
+}
+
 export default async function BrandShowPage({ params }: { params: { slug: string } }) {
   const brand = await getBrand(params.slug);
+  const brandRating = await getBrandRating(brand.id);
 
   const suggestedBrands = [
     { name: 'LAGENCE', image: '/placeholder.svg' },
@@ -71,14 +81,6 @@ export default async function BrandShowPage({ params }: { params: { slug: string
     { name: 'Net-a-Porter', location: 'Online', type: 'Luxury E-commerce' },
   ]
 
-  const ratingCategories = [
-    { name: 'Product Quality', rating: 4.7, description: 'Assesses the overall quality and durability of the products.' },
-    { name: 'Design & Style', rating: 4.9, description: 'Evaluates the aesthetic appeal and trendiness of the designs.' },
-    { name: 'Price & Value', rating: 4.5, description: 'Considers the pricing in relation to the perceived value.' },
-    { name: 'Customer Service', rating: 4.3, description: 'Rates the responsiveness and helpfulness of customer support.' },
-    { name: 'Order & Delivery', rating: 4.6, description: 'Judges the efficiency and reliability of the ordering and delivery process.' },
-  ]
-
   return (
     <div className="max-w-[1200px] mx-auto bg-gray-100 p-4">
       {/* Breadcrumb Navigation */}
@@ -111,7 +113,7 @@ export default async function BrandShowPage({ params }: { params: { slug: string
         <Image src="/placeholder.svg" alt="Fashion model" layout="fill" objectFit="cover" />
       </div>
 
-      <Header props={{ brand, isSaved: true }} />
+      <Header props={{ brand, brandRating, isSaved: true }} />
 
       <div className="flex flex-col md:flex-row gap-4">
         {/* Mobile-first Right Column (will be on top for mobile) */}
@@ -181,7 +183,7 @@ export default async function BrandShowPage({ params }: { params: { slug: string
         </div>
       </div>
 
-      <Rating ratingCategories={ratingCategories} />
+      <Rating brandRating={brandRating} />
       <Reviews reviews={brand.expand?.reviews || []} />
     </div>
   )

@@ -45,3 +45,12 @@ export interface Review {
     audioUrl?: string;
     isVerified: boolean;
 }
+
+export interface BrandRating {
+    avg_rating: number;
+    avg_product_quality: number;
+    avg_order_fulfillment: number;
+    avg_support: number;
+    avg_brand_reputation: number;
+    review_count: number;
+}

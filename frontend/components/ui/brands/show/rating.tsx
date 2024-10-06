@@ -5,20 +5,21 @@ import { motion, useAnimation, useInView } from 'framer-motion'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { Star, Info } from 'lucide-react'
 
-type RatingCategory = {
-    rating: number;
-    name: string;
-    description: string;
-};
+import { BrandRating } from '@/models/Brand'
 
-export default function Rating({ ratingCategories }: { ratingCategories: RatingCategory[] }) {
+export default function Rating({ brandRating }: { brandRating: BrandRating }) {
     const ratingRef = useRef<HTMLDivElement>(null)
     const [, setAnimate] = useState(false)
 
-    const overallRating = 4.4
-
     const controls = useAnimation()
     const isInView = useInView(ratingRef, { once: true })
+
+    const ratingCategories = [
+        { name: 'Product Quality', key: 'avg_product_quality', description: 'Assesses the overall quality and durability of the products.' },
+        { name: 'Order Fulfillment & Reliability', key: 'avg_order_fulfillment', description: 'Evaluates the efficiency and reliability of the ordering and delivery process.' },
+        { name: 'Support & Communication', key: 'avg_support', description: 'Assesses the quality of customer support and communication from the brand.' },
+        { name: 'Brand Reputation & Demand', key: 'avg_brand_reputation', description: 'Evaluates the overall reputation of the brand and demand for its products.' },
+    ]
 
     useEffect(() => {
         if (isInView) {
@@ -53,7 +54,7 @@ export default function Rating({ ratingCategories }: { ratingCategories: RatingC
                             className="text-primary drop-shadow-md"
                             strokeWidth="6"
                             strokeDasharray={565.5}
-                            strokeDashoffset={565.5 - (565.5 * overallRating) / 5}
+                            strokeDashoffset={565.5 - (565.5 * brandRating.avg_rating) / 5}
                             strokeLinecap="round"
                             stroke="currentColor"
                             fill="transparent"
@@ -63,7 +64,7 @@ export default function Rating({ ratingCategories }: { ratingCategories: RatingC
                             initial={{ strokeDashoffset: 565.5 }}
                             animate={controls}
                             variants={{
-                                visible: { strokeDashoffset: 565.5 - (565.5 * overallRating) / 5 },
+                                visible: { strokeDashoffset: 565.5 - (565.5 * brandRating.avg_rating) / 5 },
                             }}
                             transition={{ duration: 1.5, ease: "easeInOut" }}
                         />
@@ -77,7 +78,7 @@ export default function Rating({ ratingCategories }: { ratingCategories: RatingC
                         }}
                         transition={{ delay: 0.5, duration: 0.5 }}
                     >
-                        <span className="text-4xl font-bold text-gray-800">{overallRating}</span>
+                        <span className="text-4xl font-bold text-gray-800">{brandRating.avg_rating}</span>
                         <div className="flex mt-1">
                             {[...Array(5)].map((_, i) => (
                                 <motion.div
@@ -90,7 +91,7 @@ export default function Rating({ ratingCategories }: { ratingCategories: RatingC
                                     transition={{ delay: 0.7 + i * 0.1 }}
                                 >
                                     <Star
-                                        className={`h-5 w-5 ${i < Math.floor(overallRating)
+                                        className={`h-5 w-5 ${i < Math.floor(brandRating.avg_rating)
                                             ? 'text-yellow-400'
                                             : 'text-gray-300'
                                             } drop-shadow`}
@@ -121,16 +122,16 @@ export default function Rating({ ratingCategories }: { ratingCategories: RatingC
                                         </Tooltip>
                                     </TooltipProvider>
                                 </div>
-                                <span className="text-xs font-bold text-gray-800">{category.rating}</span>
+                                <span className="text-xs font-bold text-gray-800">{brandRating[category.key as keyof BrandRating]}</span>
                             </div>
                             <div className="h-3 bg-gray-200 rounded-full overflow-hidden shadow-inner">
                                 <motion.div
                                     className="h-full bg-primary rounded-full"
-                                    style={{ width: `${(category.rating / 5) * 100}%` }}
+                                    style={{ width: `${(brandRating[category.key as keyof BrandRating] / 5) * 100}%` }}
                                     initial={{ width: 0 }}
                                     animate={controls}
                                     variants={{
-                                        visible: { width: `${(category.rating / 5) * 100}%` },
+                                        visible: { width: `${(brandRating[category.key as keyof BrandRating] / 5) * 100}%` },
                                     }}
                                     transition={{ duration: 1, ease: "easeOut" }}
                                     whileHover={{ scale: 1.03 }}
@@ -141,6 +142,5 @@ export default function Rating({ ratingCategories }: { ratingCategories: RatingC
                 </div>
             </div>
         </div>
-
     )
 }

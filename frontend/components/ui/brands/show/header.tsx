@@ -8,10 +8,10 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { Heart, Flag, Star } from 'lucide-react'
 import Link from 'next/link'
 
-import { Brand } from '@/models/Brand'
+import { Brand, BrandRating } from '@/models/Brand'
 
-export default function Header({ props }: { props: { brand: Brand, isSaved: boolean } }) {
-    const { brand, isSaved } = props
+export default function Header({ props }: { props: { brand: Brand, isSaved: boolean, brandRating: BrandRating } }) {
+    const { brand, isSaved, brandRating } = props
 
     const headerRef = useRef<HTMLDivElement>(null)
     const [isSticky, setIsSticky] = useState(false)
@@ -79,7 +79,7 @@ export default function Header({ props }: { props: { brand: Brand, isSaved: bool
                     }`}
             >
                 <div className={`flex flex-col sm:flex-row justify-between items-start sm:items-center ${isSticky ? 'md:items-center' : ''}`}>
-                    <h2 className={`text-2xl font-bold mb-4 sm:mb-0 ${isSticky ? 'md:text-xl md:mb-0' : ''}`}>SECULAR</h2>
+                    <h2 className={`text-2xl font-bold mb-4 sm:mb-0 ${isSticky ? 'md:text-xl md:mb-0' : ''}`}>{brand.name}</h2>
                     <div className={`flex flex-col sm:flex-row gap-2 w-full sm:w-auto ${isSticky ? 'md:flex-row md:items-center' : ''}`}>
                         {isSticky && (
                             <Button
@@ -106,9 +106,15 @@ export default function Header({ props }: { props: { brand: Brand, isSaved: bool
                 <div className={`flex flex-col items-start gap-2 mt-2 ${isSticky ? 'md:hidden' : ''}`}>
                     <div className="flex items-center">
                         {[...Array(5)].map((_, i) => (
-                            <Star key={i} className={`h-5 w-5 ${i < 4 ? 'text-yellow-400' : 'text-gray-300'}`} fill="currentColor" />
+                            <Star 
+                                key={i} 
+                                className={`h-5 w-5 ${i < Math.floor(brandRating.avg_rating) ? 'text-yellow-400' : 'text-gray-300'}`} 
+                                fill="currentColor" 
+                            />
                         ))}
-                        <span className="ml-2 text-sm text-gray-600">4.6 (8 reviews)</span>
+                        <span className="ml-2 text-sm text-gray-600">
+                            {brandRating.avg_rating.toFixed(1)} ({brandRating.review_count} reviews)
+                        </span>
                     </div>
                     <Button
                         variant="ghost"
