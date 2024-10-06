@@ -22,8 +22,10 @@ async function getBrand(slug: string): Promise<Brand> {
 
   try {
     const record = await pb.collection('brands').getFirstListItem(`slug="${slug}"`, {
-      expand: 'categories',
+      expand: 'categories,reviews',
     });
+
+    console.log(record)
 
     return record as unknown as Brand;
   } catch {
@@ -75,22 +77,6 @@ export default async function BrandShowPage({ params }: { params: { slug: string
     { name: 'Price & Value', rating: 4.5, description: 'Considers the pricing in relation to the perceived value.' },
     { name: 'Customer Service', rating: 4.3, description: 'Rates the responsiveness and helpfulness of customer support.' },
     { name: 'Order & Delivery', rating: 4.6, description: 'Judges the efficiency and reliability of the ordering and delivery process.' },
-  ]
-
-  const reviews = [
-    {
-      initials: "CA",
-      name: "Chance A.",
-      role: "buyer",
-      details: "specialty retailer, 11 social",
-      location: "California, USA",
-      rating: 4,
-      date: "May 8th, 2024",
-      title: "TrendSetters Apparel: Stylish Choices with Seamless Delivery, Despite Slower Customer Service",
-      pros: "The range of styles and designs is fantastic. TrendSetters keeps up with fashion trends, and it's easy to find pieces that resonate with our customers' tastes. Additionally, their order and delivery process is seamless and reliable.",
-      cons: "The customer service could be more efficient. There were a couple of occasions where it took several days to get a response to inquiries, and resolving issues seemed slower than ideal.",
-      overall: "My overall experience with TrendSetters Apparel has been very positive. Despite some hiccups with customer service, the...",
-    }
   ]
 
   return (
@@ -196,7 +182,7 @@ export default async function BrandShowPage({ params }: { params: { slug: string
       </div>
 
       <Rating ratingCategories={ratingCategories} />
-      <Reviews reviews={reviews} />
+      <Reviews reviews={brand.expand?.reviews || []} />
     </div>
   )
 }

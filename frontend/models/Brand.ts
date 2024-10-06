@@ -20,5 +20,28 @@ export interface Brand {
     video_url?: string;
     expand?: {
         categories?: Category[];
+        reviews?: Review[];
     };
+}
+
+export interface Review {
+    id: string;
+    created: string;
+    rating: number;
+    subrating_product_quality: number;
+    subrating_order_fulfillment: number;
+    subrating_support: number;
+    subrating_brand_reputation: number;
+    headline: string;
+    overall: string;
+    pros: string;
+    cons: string;
+    likes: number;
+    dislikes: number;
+    images?: string[];
+    // Not implemented yet
+    isAnonymous: boolean;
+    isAudioReview: boolean;
+    audioUrl?: string;
+    isVerified: boolean;
 }
