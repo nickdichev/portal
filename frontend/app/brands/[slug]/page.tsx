@@ -17,6 +17,8 @@ import Reviews from '@/components/ui/brands/show/reviews'
 
 import { getPocketBase } from '@/lib/pocketbase'
 
+export const revalidate = 15
+
 async function getBrand(slug: string): Promise<Brand> {
   const pb = getPocketBase();
 
