@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import Link from 'next/link'
 
-import PocketBase from 'pocketbase';
 import { Brand } from '@/models/Brand'
 
 import Header from '@/components/ui/brands/show/header'
@@ -16,8 +15,10 @@ import Stockists from '@/components/ui/brands/show/stockists'
 import Rating from '@/components/ui/brands/show/rating'
 import Reviews from '@/components/ui/brands/show/reviews'
 
+import { getPocketBase } from '@/lib/pocketbase'
+
 async function getBrand(slug: string): Promise<Brand> {
-  const pb = new PocketBase('http://127.0.0.1:8090');
+  const pb = getPocketBase();
 
   try {
     const record = await pb.collection('brands').getFirstListItem(`slug="${slug}"`, {
