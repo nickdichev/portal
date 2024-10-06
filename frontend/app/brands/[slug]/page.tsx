@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import Link from 'next/link'
 
-import { Brand, BrandRating } from '@/models/Brand'
+import { Brand, BrandRating, Review } from '@/models/Brand'
 
 import Header from '@/components/ui/brands/show/header'
 import InfoCard from '@/components/ui/brands/show/info_card'
@@ -31,6 +31,21 @@ async function getBrand(slug: string): Promise<Brand> {
   }
 }
 
+async function getBrandReviews(brandId: string): Promise<Review[]> {
+  const pb = getPocketBase();
+
+  try {
+    const records = await pb.collection('brand_reviews').getList(1, 50, {
+      filter: `brand="${brandId}"`,
+      sort: '-created',
+    });
+
+    return records.items as unknown as Review[];
+  } catch {
+    throw new Error(`Reviews for brand with id "${brandId}" not found`)
+  }
+}
+
 async function getBrandRating(brandId: string): Promise<BrandRating> {
   const pb = getPocketBase();
 
@@ -45,6 +60,7 @@ async function getBrandRating(brandId: string): Promise<BrandRating> {
 export default async function BrandShowPage({ params }: { params: { slug: string } }) {
   const brand = await getBrand(params.slug);
   const brandRating = await getBrandRating(brand.id);
+  const reviews = await getBrandReviews(brand.id);
 
   const suggestedBrands = [
     { name: 'LAGENCE', image: '/placeholder.svg' },
@@ -184,7 +200,7 @@ export default async function BrandShowPage({ params }: { params: { slug: string
       </div>
 
       <Rating brandRating={brandRating} />
-      <Reviews reviews={brand.expand?.reviews || []} />
+      <Reviews reviews={reviews} />
     </div>
   )
 }

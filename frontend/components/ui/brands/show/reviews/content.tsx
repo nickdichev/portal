@@ -45,7 +45,7 @@ export default function ReviewContent({ review }: { review: Review }) {
         <div className="space-y-4">
             <h4 className="text-lg font-semibold">{review.headline}</h4>
             {review.isAudioReview && review.audioUrl && (
-                <AudioPlayer audioUrl={review.audioUrl} reviewId={review.id} />
+                <AudioPlayer audioUrl={review.audioUrl} />
             )}
             {renderExpandableContent(review.overall, 'content')}
 
