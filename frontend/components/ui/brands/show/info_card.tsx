@@ -1,12 +1,29 @@
+'use client'
+import { useState } from 'react'
 import { Brand } from '@/models/Brand'
+
 export default function InfoCard({ brand }: { brand: Brand }) {
+  const [isExpanded, setIsExpanded] = useState(false)
   return (
     <div id="brand-info" className="bg-white rounded-lg p-4 mb-4 shadow">
-      <h3 className="text-lg font-semibold mb-2">SECULAR brand wholesale information & reviews</h3>
+      <h3 className="text-lg font-semibold mb-2">{brand.name} brand wholesale information & reviews</h3>
       <p className="text-sm text-gray-600 mb-4">
-        Inspired by her surroundings and constantly inspired, named SECULAR to rebel against the rules of the traditional
-        fashion industry cycle of production. We buy less fabric from Italy and Japan in natural fibers. We develop our original
-        prints in-house and work with local Los Angeles factories to create beautiful... <a href="#" className="text-teal-500">read more</a>
+        {brand.description ? (
+          <>
+            {isExpanded ? (
+              brand.description
+            ) : (
+              <>
+                {brand.description.slice(0, 200)}...{' '}
+                <button onClick={() => setIsExpanded(true)} className="text-teal-500 hover:text-teal-600">
+                  read more
+                </button>
+              </>
+            )}
+          </>
+        ) : (
+          'No description available.'
+        )}
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-sm">
         <div>
