@@ -9,12 +9,14 @@ type Stockist = {
     type: string;
 };
 
-export default function Stockists({ stockists }: { stockists: Stockist[] }) {
+export default function Stockists({ slug, stockists }: { slug: string, stockists: Stockist[] }) {
     return (
         <div id="stockists" className="bg-white rounded-lg p-6 mb-4 shadow">
             <div className="flex justify-between items-center mb-4">
                 <h3 className="text-xl font-semibold">Stockists</h3>
-                <Button variant="outline">View All Stockists</Button>
+                <Button variant="outline">
+                    <Link href={`/brands/${slug}/stockists`}>View All Stockists</Link>
+                </Button>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {stockists.map((stockist, i) => (

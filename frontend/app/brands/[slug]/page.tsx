@@ -156,7 +156,7 @@ export default async function BrandShowPage({ params }: { params: { slug: string
           <ProductGallery productImages={productImages} />
           <Video video_url={brand.video_url} />
           <Linesheets linesheets={linesheets} />
-          <Stockists stockists={stockists} />
+          <Stockists slug={brand.slug} stockists={stockists} />
         </div>
       </div>
 
