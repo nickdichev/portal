@@ -8,10 +8,17 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { Heart, Flag, Star } from 'lucide-react'
 import Link from 'next/link'
 
-import { Brand, BrandRating } from '@/models/Brand'
+import { Brand, BrandRating, BrandProfile } from '@/models/Brand'
 
-export default function Header({ props }: { props: { brand: Brand, isSaved: boolean, brandRating: BrandRating } }) {
-    const { brand, isSaved, brandRating } = props
+type HeaderProps = {
+    brand: Brand;
+    isSaved: boolean;
+    brandRating: BrandRating;
+    brandProfile: BrandProfile | null;
+}
+
+export default function Header({ props }: { props: HeaderProps }) {
+    const { brand, isSaved, brandRating, brandProfile } = props
 
     const headerRef = useRef<HTMLDivElement>(null)
     const [isSticky, setIsSticky] = useState(false)
@@ -142,8 +149,9 @@ export default function Header({ props }: { props: { brand: Brand, isSaved: bool
                                 {tab.label}
                             </Button>
                         ))}
-                        <TooltipProvider>
-                            <Tooltip>
+                        {!brandProfile?.claimed && (
+                            <TooltipProvider>
+                                <Tooltip>
                                 <TooltipTrigger asChild>
                                     <Button
                                         variant="ghost"
@@ -157,8 +165,9 @@ export default function Header({ props }: { props: { brand: Brand, isSaved: bool
                                 <TooltipContent side="bottom" align="end" className="w-64 sm:w-80">
                                     <p className="text-sm">Is this your brand&apos;s profile? Click here to claim your listing to update the content and reply to buyer&apos;s inquiries</p>
                                 </TooltipContent>
-                            </Tooltip>
-                        </TooltipProvider>
+                                </Tooltip>
+                            </TooltipProvider>
+                        )}
                     </div>
                 </div>
             </div>

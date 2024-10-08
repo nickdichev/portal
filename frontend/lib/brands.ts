@@ -1,4 +1,4 @@
-import { Brand, BrandReview, BrandRating } from "@/models/Brand"
+import { Brand, BrandReview, BrandRating, BrandProfile } from "@/models/Brand"
 import { getPocketBase } from "./pocketbase"
 
 export async function getBrand(slug: string): Promise<Brand> {
@@ -38,5 +38,16 @@ export async function getBrandRating(brandId: string): Promise<BrandRating> {
     return record as unknown as BrandRating;
   } catch {
     throw new Error(`Rating for brand with id "${brandId}" not found`)
+  }
+}
+
+export async function getBrandProfile(brandId: string): Promise<BrandProfile | null> {
+  const pb = getPocketBase();
+
+  try {
+    const result = await pb.collection('brand_profiles').getFirstListItem(`brand="${brandId}"`) as BrandProfile;
+    return result;
+  } catch (error) {
+    return null;
   }
 }

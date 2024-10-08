@@ -53,3 +53,8 @@ export interface BrandRating {
     avg_brand_reputation: number;
     review_count: number;
 }
+
+export interface BrandProfile {
+    id: string;
+    claimed: boolean;
+}

@@ -13,7 +13,7 @@ import Stockists from '@/components/ui/brands/show/stockists'
 import Rating from '@/components/ui/brands/show/rating'
 import Reviews from '@/components/ui/brands/show/reviews'
 
-import { getBrand, getBrandRating, getBrandReviews } from '@/lib/brands'
+import { getBrand, getBrandRating, getBrandReviews, getBrandProfile } from '@/lib/brands'
 
 export const revalidate = 15
 
@@ -21,6 +21,7 @@ export default async function BrandShowPage({ params }: { params: { slug: string
   const brand = await getBrand(params.slug);
   const brandRating = await getBrandRating(brand.id);
   const reviews = await getBrandReviews(brand.id);
+  const brandProfile = await getBrandProfile(brand.id);
 
   const suggestedBrands = [
     { name: 'LAGENCE', image: '/placeholder.svg' },
@@ -89,7 +90,7 @@ export default async function BrandShowPage({ params }: { params: { slug: string
         <Image src="/placeholder.svg" alt="Fashion model" layout="fill" objectFit="cover" />
       </div>
 
-      <Header props={{ brand, brandRating, isSaved: true }} />
+      <Header props={{ brand, brandRating, brandProfile, isSaved: true }} />
 
       <div className="flex flex-col md:flex-row gap-4">
         {/* Mobile-first Right Column (will be on top for mobile) */}
