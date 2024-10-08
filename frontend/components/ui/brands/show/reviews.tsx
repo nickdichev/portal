@@ -1,7 +1,7 @@
-import { Review } from '@/models/Brand'
+import { BrandReview } from '@/models/Brand'
 import ReviewCard from './reviews/card'
 
-export default function Reviews({ reviews }: { reviews: Review[] }) {
+export default function Reviews({ reviews }: { reviews: BrandReview[] }) {
     return (
         <div className="space-y-6">
             {reviews.map((review) => (

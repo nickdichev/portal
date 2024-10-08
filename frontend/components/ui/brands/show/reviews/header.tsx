@@ -1,11 +1,11 @@
 'use client'
 
-import { Review } from '@/models/Brand'
+import { BrandReview } from '@/models/Brand'
 // import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { CheckCircle2, Mic, Image as ImageIcon } from 'lucide-react'
 
-export default function ReviewHeader({ review }: { review: Review }) {
+export default function ReviewHeader({ review }: { review: BrandReview }) {
     const renderOverallRating = (rating: number) => {
         return (
             <div className="flex items-baseline space-x-1">

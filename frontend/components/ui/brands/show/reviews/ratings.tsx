@@ -1,7 +1,7 @@
-import { Review } from '@/models/Brand'
+import { BrandReview } from '@/models/Brand'
 
-export default function ReviewRatings({ review }: { review: Review }) {
-    const renderAspectRatings = (review: Review) => {
+export default function ReviewRatings({ review }: { review: BrandReview }) {
+    const renderAspectRatings = (review: BrandReview) => {
         const subratingLabels = {
             subrating_product_quality: "Product Quality",
             subrating_order_fulfillment: "Order Fulfillment",

@@ -1,12 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-import { Review } from '@/models/Brand'
+import { BrandReview } from '@/models/Brand'
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { ChevronUp, ChevronDown, ThumbsUp, ThumbsDown } from 'lucide-react'
 
-export default function ReviewExpander({ review }: { review: Review }) {
+export default function ReviewExpander({ review }: { review: BrandReview }) {
     const [isExpanded, setIsExpanded] = useState(false)
 
     const toggleExpansion = () => {

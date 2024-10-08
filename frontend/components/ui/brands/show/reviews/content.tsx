@@ -1,11 +1,11 @@
 'use client'
 
 import { useState } from 'react'
-import { Review } from '@/models/Brand'
+import { BrandReview } from '@/models/Brand'
 import { Button } from "@/components/ui/button"
 import AudioPlayer from './audio_player'
 
-export default function ReviewContent({ review }: { review: Review }) {
+export default function ReviewContent({ review }: { review: BrandReview }) {
     const [expandedContent, setExpandedContent] = useState<{ [key: string]: boolean }>({})
 
     const toggleContentExpansion = (contentType: string) => {

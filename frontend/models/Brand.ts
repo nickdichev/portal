@@ -20,11 +20,10 @@ export interface Brand {
     video_url?: string;
     expand?: {
         categories?: Category[];
-        reviews?: Review[];
     };
 }
 
-export interface Review {
+export interface BrandReview {
     id: string;
     created: string;
     rating: number;

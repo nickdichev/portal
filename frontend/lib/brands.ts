@@ -1,4 +1,4 @@
-import { Brand, Review, BrandRating } from "@/models/Brand"
+import { Brand, BrandReview, BrandRating } from "@/models/Brand"
 import { getPocketBase } from "./pocketbase"
 
 export async function getBrand(slug: string): Promise<Brand> {
@@ -15,7 +15,7 @@ export async function getBrand(slug: string): Promise<Brand> {
   }
 }
 
-export async function getBrandReviews(brandId: string): Promise<Review[]> {
+export async function getBrandReviews(brandId: string): Promise<BrandReview[]> {
   const pb = getPocketBase();
 
   try {
@@ -24,7 +24,7 @@ export async function getBrandReviews(brandId: string): Promise<Review[]> {
       sort: '-created',
     });
 
-    return records.items as unknown as Review[];
+    return records.items as unknown as BrandReview[];
   } catch {
     throw new Error(`Reviews for brand with id "${brandId}" not found`)
   }

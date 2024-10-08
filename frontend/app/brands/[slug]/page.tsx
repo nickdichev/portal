@@ -4,8 +4,6 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import Link from 'next/link'
 
-import { Brand, BrandRating, Review } from '@/models/Brand'
-
 import Header from '@/components/ui/brands/show/header'
 import InfoCard from '@/components/ui/brands/show/info_card'
 import ProductGallery from '@/components/ui/brands/show/product_gallery'
