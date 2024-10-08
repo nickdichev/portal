@@ -15,49 +15,9 @@ import Stockists from '@/components/ui/brands/show/stockists'
 import Rating from '@/components/ui/brands/show/rating'
 import Reviews from '@/components/ui/brands/show/reviews'
 
-import { getPocketBase } from '@/lib/pocketbase'
+import { getBrand, getBrandRating, getBrandReviews } from '@/lib/brands'
 
 export const revalidate = 15
-
-async function getBrand(slug: string): Promise<Brand> {
-  const pb = getPocketBase();
-
-  try {
-    const record = await pb.collection('brands').getFirstListItem(`slug="${slug}"`, {
-      expand: 'categories,reviews',
-    });
-
-    return record as unknown as Brand;
-  } catch {
-    throw new Error(`Brand with slug "${slug}" not found`)
-  }
-}
-
-async function getBrandReviews(brandId: string): Promise<Review[]> {
-  const pb = getPocketBase();
-
-  try {
-    const records = await pb.collection('brand_reviews').getList(1, 50, {
-      filter: `brand="${brandId}"`,
-      sort: '-created',
-    });
-
-    return records.items as unknown as Review[];
-  } catch {
-    throw new Error(`Reviews for brand with id "${brandId}" not found`)
-  }
-}
-
-async function getBrandRating(brandId: string): Promise<BrandRating> {
-  const pb = getPocketBase();
-
-  try {
-    const record = await pb.collection('brand_ratings').getOne(brandId);
-    return record as unknown as BrandRating;
-  } catch {
-    throw new Error(`Rating for brand with id "${brandId}" not found`)
-  }
-}
 
 export default async function BrandShowPage({ params }: { params: { slug: string } }) {
   const brand = await getBrand(params.slug);
