@@ -1,9 +1,11 @@
 import Breadcrumbs from '@/components/ui/breadcrumbs'
+import BrandHeader from '@/components/ui/stockists/index/brand_header';
 
-import { getBrand } from '@/lib/brands'
+import { getBrand, getBrandRating } from '@/lib/brands'
 
 export default async function StockistsPage({ params }: { params: { slug: string } }) {
   const brand = await getBrand(params.slug);
+  const brandRating = await getBrandRating(brand.id);
 
   const breadcrumbs = [
     { label: 'brands', href: '/brands' },
@@ -13,5 +15,7 @@ export default async function StockistsPage({ params }: { params: { slug: string
 
   return <div className="max-w-[1200px] mx-auto bg-gray-100 p-4">
     <Breadcrumbs items={breadcrumbs} />
+
+    <BrandHeader brand={brand} brand_rating={brandRating} />
   </div>
 }
