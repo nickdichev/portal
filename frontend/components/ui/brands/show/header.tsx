@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 
+import StarRating from '@/components/star_rating'
 import { Button } from "@/components/ui/button"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { Heart, Flag, Star } from 'lucide-react'
@@ -111,18 +112,7 @@ export default function Header({ props }: { props: HeaderProps }) {
                     </div>
                 </div>
                 <div className={`flex flex-col items-start gap-2 mt-2 ${isSticky ? 'md:hidden' : ''}`}>
-                    <div className="flex items-center">
-                        {[...Array(5)].map((_, i) => (
-                            <Star 
-                                key={i} 
-                                className={`h-5 w-5 ${i < Math.floor(brandRating.avg_rating) ? 'text-yellow-400' : 'text-gray-300'}`} 
-                                fill="currentColor" 
-                            />
-                        ))}
-                        <span className="ml-2 text-sm text-gray-600">
-                            {brandRating.avg_rating.toFixed(1)} ({brandRating.review_count} reviews)
-                        </span>
-                    </div>
+                    <StarRating avg_rating={brandRating.avg_rating} review_count={brandRating.review_count} />
                     <Button
                         variant="ghost"
                         size="sm"
