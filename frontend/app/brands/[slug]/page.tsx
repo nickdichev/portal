@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import Link from 'next/link'
 
+import Breadcrumbs from '@/components/ui/breadcrumbs'
 import Header from '@/components/ui/brands/show/header'
 import InfoCard from '@/components/ui/brands/show/info_card'
 import ProductGallery from '@/components/ui/brands/show/product_gallery'
@@ -58,32 +59,14 @@ export default async function BrandShowPage({ params }: { params: { slug: string
     { name: 'Net-a-Porter', location: 'Online', type: 'Luxury E-commerce' },
   ]
 
+  const breadcrumbs = [
+    { label: 'brands', href: '/brands' },
+    { label: brand.name, href: `/brands/${brand.slug}` },
+  ]
+
   return (
     <div className="max-w-[1200px] mx-auto bg-gray-100 p-4">
-      {/* Breadcrumb Navigation */}
-      <nav className="text-sm mb-4 overflow-x-auto whitespace-nowrap">
-        <ol className="list-none p-0 inline-flex">
-          <li className="flex items-center">
-            <Link href="/" className="text-gray-500 hover:underline">portal</Link>
-            <ChevronRight className="h-4 w-4 mx-1 text-gray-400" />
-          </li>
-          <li className="flex items-center">
-            <Link href="/brands" className="text-gray-500 hover:underline">brands</Link>
-            <ChevronRight className="h-4 w-4 mx-1 text-gray-400" />
-          </li>
-          <li className="flex items-center">
-            <a href="#" className="text-gray-500 hover:underline">womens</a>
-            <ChevronRight className="h-4 w-4 mx-1 text-gray-400" />
-          </li>
-          <li className="flex items-center">
-            <a href="#" className="text-gray-500 hover:underline">contemporary</a>
-            <ChevronRight className="h-4 w-4 mx-1 text-gray-400" />
-          </li>
-          <li className="flex items-center">
-            <span className="text-gray-700">{brand?.name}</span>
-          </li>
-        </ol>
-      </nav>
+      <Breadcrumbs items={breadcrumbs} />
 
       {/* Image Carousel */}
       <div className="relative mb-4 h-48 sm:h-64 bg-gray-200 rounded-lg overflow-hidden">
