@@ -9,6 +9,12 @@ export enum StockistType {
     Ecommerce = 'ecommerce'
 }
 
+export enum PricePoint {
+    Affordable = 'affordable',
+    MidRange = 'mid_range',
+    HighEnd = 'high_end'
+}
+
 export interface Stockist {
     id: string;
     name: string;
@@ -16,4 +22,5 @@ export interface Stockist {
     price_range_high?: number;
     category: StockistCategory;
     type: StockistType;
+    price_point: PricePoint;
 }
