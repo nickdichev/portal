@@ -23,7 +23,10 @@ export default async function BrandShowPage({ params }: { params: { slug: string
   const brandRating = await getBrandRating(brand.id);
   const reviews = await getBrandReviews(brand.id);
   const brandProfile = await getBrandProfile(brand.id);
+
+  const heroImage = await getBrandImageUrls(brand.id, 'hero_image');
   const product_gallery = await getBrandImageUrls(brand.id, 'product_gallery');
+  const logo = await getBrandImageUrls(brand.id, 'logo');
 
   const suggestedBrands = [
     { name: 'LAGENCE', image: '/placeholder.svg' },
@@ -58,29 +61,17 @@ export default async function BrandShowPage({ params }: { params: { slug: string
     <div className="max-w-[1200px] mx-auto bg-gray-100 p-4">
       <Breadcrumbs items={breadcrumbs} />
 
-      {/* Image Carousel */}
-      <div className="relative mb-4 h-48 sm:h-64 bg-gray-200 rounded-lg overflow-hidden">
-        <Image src="/placeholder.svg" alt="Fashion model" layout="fill" objectFit="cover" />
-      </div>
+      {heroImage && (
+        <div className="relative mb-4 h-48 sm:h-64 bg-gray-200 rounded-lg overflow-hidden">
+          <Image src={heroImage as string} alt={`${brand.name} hero image`} layout="fill" objectFit="cover" />
+        </div>
+      )}
 
       <Header props={{ brand, brandRating, brandProfile, isSaved: true }} />
 
       <div className="flex flex-col md:flex-row gap-4">
         {/* Mobile-first Right Column (will be on top for mobile) */}
         <div className="md:w-1/3 md:order-2">
-          {/* Brand Profile Image */}
-          <div className="bg-white rounded-lg p-4 mb-4 shadow">
-            {/* Logo Image */}
-            <div className="w-2/3 mx-auto mb-4">
-              <div className="aspect-w-3 aspect-h-2 bg-gray-200 rounded-md overflow-hidden">
-                {/* <Image src="/placeholder.svg" alt="SECULAR logo" layout="fill" objectFit="contain" /> */}
-              </div>
-            </div>
-            {/* Brand Image */}
-            <div className="aspect-w-2 aspect-h-3 bg-gray-200 rounded-md overflow-hidden">
-              {/* <Image src="/placeholder.svg" alt="SECULAR brand profile" layout="fill" objectFit="cover" /> */}
-            </div>
-          </div>
 
           {/* Message Brand */}
           <Card className="mb-4">
