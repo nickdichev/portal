@@ -5,14 +5,14 @@ import { Card, CardContent } from "@/components/ui/card"
 import Link from 'next/link'
 
 import Breadcrumbs from '@/components/ui/breadcrumbs'
-import Header from '@/components/ui/brands/show/header'
-import InfoCard from '@/components/ui/brands/show/info_card'
-import ProductGallery from '@/components/ui/brands/show/product_gallery'
-import Video from '@/components/ui/brands/show/video'
-import Linesheets from '@/components/ui/brands/show/linesheets'
-import Stockists from '@/components/ui/brands/show/stockists'
-import Rating from '@/components/ui/brands/show/rating'
-import Reviews from '@/components/ui/brands/show/reviews'
+import Header from '@/components/brands/show/header'
+import InfoCard from '@/components/brands/show/info_card'
+import ProductGallery from '@/components/brands/show/product_gallery'
+import Video from '@/components/brands/show/video'
+import Linesheets from '@/components/brands/show/linesheets'
+import Stockists from '@/components/brands/show/stockists'
+import Rating from '@/components/brands/show/rating'
+import Reviews from '@/components/brands/show/reviews'
 
 import { getBrand, getBrandRating, getBrandReviews, getBrandProfile } from '@/lib/brands'
 

@@ -1,9 +1,9 @@
 import Breadcrumbs from '@/components/ui/breadcrumbs'
-import BrandHeader from '@/components/ui/stockists/index/brand_header';
-import FAQ from '@/components/ui/stockists/index/faq';
-import FeaturedStockists from '@/components/ui/stockists/index/featured_stockists';
-import StockistsList from '@/components/ui/stockists/index/stockists_list';
-import Testimonials from '@/components/ui/stockists/index/testimonials';
+import BrandHeader from '@/components/stockists/index/brand_header';
+import FAQ from '@/components/stockists/index/faq';
+import FeaturedStockists from '@/components/stockists/index/featured_stockists';
+import StockistsList from '@/components/stockists/index/stockists_list';
+import Testimonials from '@/components/stockists/index/testimonials';
 
 import { getBrand, getBrandRating } from '@/lib/brands'
 import { getFeaturedStockists, getStockists } from '@/lib/stockists'
