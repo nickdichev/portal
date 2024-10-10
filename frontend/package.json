@@ -22,6 +22,7 @@
     "clsx": "^2.1.1",
     "framer-motion": "^11.9.0",
     "lucide-react": "^0.445.0",
+    "maplibre-gl": "^4.7.1",
     "next": "14.2.13",
     "pocketbase": "^0.21.5",
     "react": "^18",

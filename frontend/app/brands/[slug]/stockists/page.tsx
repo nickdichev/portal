@@ -2,6 +2,7 @@ import Breadcrumbs from '@/components/ui/breadcrumbs'
 import BrandHeader from '@/components/ui/stockists/index/brand_header';
 import FAQ from '@/components/ui/stockists/index/faq';
 import FeaturedStockists from '@/components/ui/stockists/index/featured_stockists';
+import StockistsList from '@/components/ui/stockists/index/stockists_list';
 import Testimonials from '@/components/ui/stockists/index/testimonials';
 
 import { getBrand, getBrandRating } from '@/lib/brands'
@@ -24,6 +25,7 @@ export default async function StockistsPage({ params }: { params: { slug: string
 
     <BrandHeader brand={brand} brand_rating={brandRating} />
     <FeaturedStockists featuredStockists={featuredStockists} />
+    <StockistsList brand={brand} stockists={stockists} />
     <Testimonials />
     <FAQ />
   </div>
