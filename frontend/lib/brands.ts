@@ -1,4 +1,4 @@
-import { Brand, BrandReview, BrandRating, BrandProfile } from "@/models/Brand"
+import { Brand, BrandReview, BrandRating, BrandProfile, BrandImage } from "@/models/Brand"
 import { getPocketBase } from "./pocketbase"
 
 export async function getBrand(slug: string): Promise<Brand> {
@@ -47,6 +47,22 @@ export async function getBrandProfile(brandId: string): Promise<BrandProfile | n
   try {
     const result = await pb.collection('brand_profiles').getFirstListItem(`brand="${brandId}"`) as BrandProfile;
     return result;
+  } catch (error) {
+    return null;
+  }
+}
+
+export async function getBrandImageUrls(brandId: string, key: 'logo' | 'product_gallery' | 'hero_image'): Promise<string | string[] | null> {
+  const pb = getPocketBase();
+
+  try {
+    const result = await pb.collection('brand_images').getFirstListItem(`brand="${brandId}"`);
+
+    if (Array.isArray(result[key])) {
+      return result[key].map(image => pb.files.getUrl(result, image));
+    } else {
+      return pb.files.getUrl(result, result[key]) as string;
+    }
   } catch (error) {
     return null;
   }

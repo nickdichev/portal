@@ -58,3 +58,11 @@ export interface BrandProfile {
     id: string;
     claimed: boolean;
 }
+
+export interface BrandImage {
+    id: string;
+    brand: string;
+    logo: string;
+    hero_image: string;
+    product_gallery: string[];
+}

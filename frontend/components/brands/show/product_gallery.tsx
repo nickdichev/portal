@@ -12,14 +12,13 @@ export default function ProductGallery({ productImages }: { productImages: strin
     const [currentImageIndex, setCurrentImageIndex] = useState(0)
     const [visibleImages, setVisibleImages] = useState(4)
 
-
     useEffect(() => {
         const updateVisibleImages = () => {
           if (galleryRef.current) {
             const galleryWidth = galleryRef.current.offsetWidth
-            const imageWidth = 150 // Approximate width of each image including gap
+            const imageWidth = 250 // Increased width of each image including gap
             const newVisibleImages = Math.floor(galleryWidth / imageWidth)
-            setVisibleImages(newVisibleImages)
+            setVisibleImages(Math.max(newVisibleImages, 1)) // Ensure at least one image is visible
           }
         }
     
@@ -45,7 +44,7 @@ export default function ProductGallery({ productImages }: { productImages: strin
 
     return (
         <div ref={productGalleryRef} className="bg-white rounded-lg p-4 mb-4 shadow">
-            <h3 className="text-lg font-semibold mb-2">product gallery</h3>
+            <h3 className="text-lg font-semibold mb-2">Product Gallery</h3>
             <div className="relative" ref={galleryRef}>
                 <div className="flex overflow-hidden">
                     <div
@@ -53,9 +52,16 @@ export default function ProductGallery({ productImages }: { productImages: strin
                         style={{ transform: `translateX(-${currentImageIndex * 100 / visibleImages}%)` }}
                     >
                         {productImages.map((src, i) => (
-                            <div key={i} className="w-1/4 flex-shrink-0 p-1">
+                            <div key={i} className="w-1/4 flex-shrink-0 p-2">
                                 <div className="aspect-w-1 aspect-h-1 bg-gray-200 rounded-md overflow-hidden">
-                                    <Image src={src} alt={`Product ${i + 1}`} layout="fill" objectFit="cover" />
+                                    <Image 
+                                        src={src} 
+                                        alt={`Product ${i + 1}`} 
+                                        layout="responsive"
+                                        width={200}
+                                        height={200}
+                                        objectFit="cover"
+                                    />
                                 </div>
                             </div>
                         ))}

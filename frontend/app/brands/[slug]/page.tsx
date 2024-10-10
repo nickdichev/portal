@@ -14,7 +14,7 @@ import Stockists from '@/components/brands/show/stockists'
 import Rating from '@/components/brands/show/rating'
 import Reviews from '@/components/brands/show/reviews'
 
-import { getBrand, getBrandRating, getBrandReviews, getBrandProfile } from '@/lib/brands'
+import { getBrand, getBrandRating, getBrandReviews, getBrandProfile, getBrandImageUrls } from '@/lib/brands'
 
 export const revalidate = 15
 
@@ -23,23 +23,13 @@ export default async function BrandShowPage({ params }: { params: { slug: string
   const brandRating = await getBrandRating(brand.id);
   const reviews = await getBrandReviews(brand.id);
   const brandProfile = await getBrandProfile(brand.id);
+  const product_gallery = await getBrandImageUrls(brand.id, 'product_gallery');
 
   const suggestedBrands = [
     { name: 'LAGENCE', image: '/placeholder.svg' },
     { name: 'ESSE', image: '/placeholder.svg' },
     { name: 'CAES', image: '/placeholder.svg' },
     { name: 'TOTEME', image: '/placeholder.svg' },
-  ]
-
-  const productImages = [
-    '/placeholder.svg',
-    '/placeholder.svg',
-    '/placeholder.svg',
-    '/placeholder.svg',
-    '/placeholder.svg',
-    '/placeholder.svg',
-    '/placeholder.svg',
-    '/placeholder.svg',
   ]
 
   const linesheets = [
@@ -136,7 +126,9 @@ export default async function BrandShowPage({ params }: { params: { slug: string
 
         <div className="md:w-2/3 md:order-1">
           <InfoCard brand={brand} />
-          <ProductGallery productImages={productImages} />
+          {product_gallery && product_gallery.length > 0 && (
+            <ProductGallery productImages={product_gallery as string[]} />
+          )}
           <Video video_url={brand.video_url} />
           <Linesheets linesheets={linesheets} />
           <Stockists slug={brand.slug} stockists={stockists} />
