@@ -78,7 +78,7 @@ export default function Rating({ brandRating }: { brandRating: BrandRating }) {
                         }}
                         transition={{ delay: 0.5, duration: 0.5 }}
                     >
-                        <span className="text-4xl font-bold text-gray-800">{brandRating.avg_rating}</span>
+                        <span className="text-4xl font-bold text-gray-800">{brandRating.avg_rating.toFixed(1)}</span>
                         <div className="flex mt-1">
                             {[...Array(5)].map((_, i) => (
                                 <motion.div
@@ -122,16 +122,18 @@ export default function Rating({ brandRating }: { brandRating: BrandRating }) {
                                         </Tooltip>
                                     </TooltipProvider>
                                 </div>
-                                <span className="text-xs font-bold text-gray-800">{brandRating[category.key as keyof BrandRating]}</span>
+                                <span className="text-xs font-bold text-gray-800">
+                                    {(brandRating[category.key as keyof BrandRating] as number).toFixed(1)}
+                                </span>
                             </div>
                             <div className="h-3 bg-gray-200 rounded-full overflow-hidden shadow-inner">
                                 <motion.div
                                     className="h-full bg-primary rounded-full"
-                                    style={{ width: `${(brandRating[category.key as keyof BrandRating] / 5) * 100}%` }}
+                                    style={{ width: `${(brandRating[category.key as keyof BrandRating] as number / 5) * 100}%` }}
                                     initial={{ width: 0 }}
                                     animate={controls}
                                     variants={{
-                                        visible: { width: `${(brandRating[category.key as keyof BrandRating] / 5) * 100}%` },
+                                        visible: { width: `${(brandRating[category.key as keyof BrandRating] as number / 5) * 100}%` },
                                     }}
                                     transition={{ duration: 1, ease: "easeOut" }}
                                     whileHover={{ scale: 1.03 }}
