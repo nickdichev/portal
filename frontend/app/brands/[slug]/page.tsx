@@ -16,6 +16,7 @@ import Reviews from '@/components/brands/show/reviews'
 import SuggestedBrands from '@/components/brands/show/suggested_brands'
 
 import { getBrand, getBrandRating, getBrandReviews, getBrandProfile, getBrandImageUrls } from '@/lib/brands'
+import { getStockists } from '@/lib/stockists'
 
 export const revalidate = 15
 
@@ -29,12 +30,7 @@ export default async function BrandShowPage({ params }: { params: { slug: string
   const product_gallery = await getBrandImageUrls(brand.id, 'product_gallery');
   const logo = await getBrandImageUrls(brand.id, 'logo');
 
-  const suggestedBrands = [
-    { name: 'LAGENCE', image: '/placeholder.svg' },
-    { name: 'ESSE', image: '/placeholder.svg' },
-    { name: 'CAES', image: '/placeholder.svg' },
-    { name: 'TOTEME', image: '/placeholder.svg' },
-  ]
+  const stockists = await getStockists(brand.id);
 
   const linesheets = [
     { season: 'Spring Summer 2024', image: '/placeholder.svg', isNew: true },
@@ -42,15 +38,6 @@ export default async function BrandShowPage({ params }: { params: { slug: string
     { season: 'Resort 2024', image: '/placeholder.svg', isNew: true },
     { season: 'Holiday 2023', image: '/placeholder.svg', isNew: false },
     { season: 'Pre-Fall 2024 Collection with Extended Name', image: '/placeholder.svg', isNew: true },
-  ]
-
-  const stockists = [
-    { name: 'Nordstrom', location: 'New York, NY', type: 'Department Store' },
-    { name: 'Saks Fifth Avenue', location: 'Los Angeles, CA', type: 'Luxury Department Store' },
-    { name: 'Neiman Marcus', location: 'Chicago, IL', type: 'Luxury Department Store' },
-    { name: 'Bloomingdale\'s', location: 'Miami, FL', type: 'Department Store' },
-    { name: 'Shopbop', location: 'Online', type: 'E-commerce' },
-    { name: 'Net-a-Porter', location: 'Online', type: 'Luxury E-commerce' },
   ]
 
   const breadcrumbs = [

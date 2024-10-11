@@ -1,15 +1,21 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { MapPin } from "lucide-react"
 
-type Stockist = {
-    name: string;
-    location: string;
-    type: string;
-};
+import { Stockist, StockistCategory, StockistType } from "@/models/Stockist"
 
 export default function Stockists({ slug, stockists }: { slug: string, stockists: Stockist[] }) {
+    const categoryLookup = {
+        [StockistCategory.Luxury]: 'Luxury',
+        [StockistCategory.MultiBrand]: 'Multi-Brand',
+        [StockistCategory.Boutique]: 'Boutique'
+    };
+
+    const typeLookup = {
+        [StockistType.Physical]: 'Physical Store',
+        [StockistType.Ecommerce]: 'E-commerce'
+    };
+
     return (
         <div id="stockists" className="bg-white rounded-lg p-6 mb-4 shadow">
             <div className="flex justify-between items-center mb-4">
@@ -24,16 +30,14 @@ export default function Stockists({ slug, stockists }: { slug: string, stockists
                         <CardContent className="p-4">
                             <Link href={`/stockists/${stockist.name.toLowerCase().replace(/\s+/g, '-')}`} className="block">
                                 <h4 className="font-semibold text-lg mb-1">{stockist.name}</h4>
-                                <div className="flex items-center text-sm text-gray-600 mb-1">
-                                    <MapPin className="w-4 h-4 mr-1" />
-                                    <span>{stockist.location}</span>
-                                </div>
-                                <p className="text-sm text-gray-500">{stockist.type}</p>
+                                <p className="text-sm text-gray-500">
+                                    {categoryLookup[stockist.category]} {typeLookup[stockist.type]}
+                                </p>
                             </Link>
                         </CardContent>
                     </Card>
                 ))}
             </div>
         </div>
-)
+    )
 }
