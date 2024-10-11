@@ -31,16 +31,16 @@ export default function ProductGallery({ productImages }: { productImages: strin
       }, [])
 
     const nextImage = () => {
-        setCurrentImageIndex((prevIndex) =>
-            (prevIndex + visibleImages >= productImages.length) ? 0 : prevIndex + visibleImages
-        )
+        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % productImages.length)
     }
 
     const prevImage = () => {
-        setCurrentImageIndex((prevIndex) =>
-            (prevIndex - visibleImages < 0) ? Math.max(productImages.length - visibleImages, 0) : prevIndex - visibleImages
+        setCurrentImageIndex((prevIndex) => 
+            prevIndex === 0 ? productImages.length - 1 : prevIndex - 1
         )
     }
+
+    const shouldShowArrows = productImages.length > visibleImages
 
     return (
         <div ref={productGalleryRef} className="bg-white rounded-lg p-4 mb-4 shadow">
@@ -49,14 +49,14 @@ export default function ProductGallery({ productImages }: { productImages: strin
                 <div className="flex overflow-hidden">
                     <div
                         className="flex transition-transform duration-300 ease-in-out"
-                        style={{ transform: `translateX(-${currentImageIndex * 100 / visibleImages}%)` }}
+                        style={{ transform: `translateX(-${(currentImageIndex * 100) / visibleImages}%)` }}
                     >
-                        {productImages.map((src, i) => (
+                        {[...productImages, ...productImages.slice(0, visibleImages)].map((src, i) => (
                             <div key={i} className="w-1/4 flex-shrink-0 p-2">
                                 <div className="aspect-w-1 aspect-h-1 bg-gray-200 rounded-md overflow-hidden">
                                     <Image 
                                         src={src} 
-                                        alt={`Product ${i + 1}`} 
+                                        alt={`Product ${(i % productImages.length) + 1}`} 
                                         layout="responsive"
                                         width={200}
                                         height={200}
@@ -67,7 +67,7 @@ export default function ProductGallery({ productImages }: { productImages: strin
                         ))}
                     </div>
                 </div>
-                {productImages.length > visibleImages && (
+                {shouldShowArrows && (
                     <>
                         <Button
                             variant="ghost"
