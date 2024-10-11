@@ -1,4 +1,4 @@
-import { Brand, BrandReview, BrandRating, BrandProfile, BrandImage } from "@/models/Brand"
+import { Brand, BrandReview, BrandRating, BrandProfile, SuggestedBrand } from "@/models/Brand"
 import { getPocketBase } from "./pocketbase"
 
 export async function getBrand(slug: string): Promise<Brand> {
@@ -65,5 +65,17 @@ export async function getBrandImageUrls(brandId: string, key: 'logo' | 'product_
     }
   } catch (error) {
     return null;
+  }
+}
+
+export async function getSuggestedBrands(): Promise<SuggestedBrand[]> {
+  const pb = getPocketBase();
+
+  try {
+    const records = await pb.collection('suggested_brands').getFullList();
+    return records as unknown as SuggestedBrand[];
+  } catch (error) {
+    console.error('Error fetching suggested brands:', error);
+    return [];
   }
 }

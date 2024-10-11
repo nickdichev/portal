@@ -58,3 +58,9 @@ export interface BrandProfile {
     id: string;
     claimed: boolean;
 }
+
+export interface SuggestedBrand {
+    id: string;
+    name: string;
+    slug: string;
+}

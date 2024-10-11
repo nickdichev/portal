@@ -13,6 +13,7 @@ import Linesheets from '@/components/brands/show/linesheets'
 import Stockists from '@/components/brands/show/stockists'
 import Rating from '@/components/brands/show/rating'
 import Reviews from '@/components/brands/show/reviews'
+import SuggestedBrands from '@/components/brands/show/suggested_brands'
 
 import { getBrand, getBrandRating, getBrandReviews, getBrandProfile, getBrandImageUrls } from '@/lib/brands'
 
@@ -91,28 +92,7 @@ export default async function BrandShowPage({ params }: { params: { slug: string
             </CardContent>
           </Card>
 
-          {/* Suggested Brands */}
-          <Card className="mb-4">
-            <CardContent className="p-4">
-              <h3 className="text-lg font-semibold mb-3">Suggested Brands</h3>
-              <div className="grid grid-cols-2 gap-3">
-                {suggestedBrands.map((brand, index) => (
-                  <div key={index} className="flex flex-col items-center">
-                    <div className="aspect-w-3 aspect-h-4 w-full mb-2">
-                      {/* <Image
-                        src={brand.image}
-                        alt={brand.name}
-                        layout="fill"
-                        objectFit="cover"
-                        className="rounded-md"
-                      /> */}
-                    </div>
-                    <p className="text-sm font-medium text-center truncate w-full">{brand.name}</p>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+          <SuggestedBrands />
         </div>
 
         <div className="md:w-2/3 md:order-1">
