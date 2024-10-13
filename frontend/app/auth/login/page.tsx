@@ -22,7 +22,7 @@ export default function LoginPage() {
     const result = await login(email, password)
     if (result.success) {
       router.push('/brands')
-      router.refresh() // Refresh the current route to update server components
+      router.refresh()
     } else {
       setError('Login failed. Please check your credentials and try again.')
     }
