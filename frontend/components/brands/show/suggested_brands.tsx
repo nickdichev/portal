@@ -7,13 +7,16 @@ import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { SuggestedBrand } from '@/models/Brand';
 import { getSuggestedBrands } from '@/lib/brands';
+import { createPocketBase, PocketBaseInstance } from '@/lib/pocketbase';
 
 function SuggestedBrandsContent() {
   const [suggestedBrands, setSuggestedBrands] = useState<SuggestedBrand[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const pb = createPocketBase();
+
   useEffect(() => {
-    getSuggestedBrands().then(brands => {
+    getSuggestedBrands(pb).then(brands => {
       setSuggestedBrands(brands);
       setIsLoading(false);
     });
@@ -38,7 +41,7 @@ function SuggestedBrandsContent() {
   );
 }
 
-export default function SuggestedBrands() {
+export default function SuggestedBrands(pb: PocketBaseInstance) {
   return (
     <Card className="mb-4">
       <CardContent className="p-4">

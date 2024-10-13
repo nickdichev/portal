@@ -63,6 +63,6 @@ export async function getSuggestedBrands(pb: PocketBaseInstance): Promise<Sugges
     const records = await pb.collection('suggested_brands').getFullList();
     return records as unknown as SuggestedBrand[];
   } catch {
-    throw new Error(`Suggested brands not found`)
+    return [];
   }
 }

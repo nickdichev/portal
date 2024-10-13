@@ -19,9 +19,9 @@ import { getServerSidePocketBase } from '@/app/auth/actions'
 import { getBrand, getBrandRating, getBrandReviews, getBrandProfile, getBrandImageUrls } from '@/lib/brands'
 import { getStockists } from '@/lib/stockists'
 
-
 export default async function BrandShowPage({ params }: { params: { slug: string } }) {
   const pb = await getServerSidePocketBase();
+
   const brand = await getBrand(pb, params.slug);
   const brandRating = await getBrandRating(pb, brand.id);
   const reviews = await getBrandReviews(pb, brand.id);
