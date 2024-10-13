@@ -1,11 +1,15 @@
-import PocketBase from 'pocketbase';
+import PocketBase, { BaseAuthStore } from 'pocketbase';
 
-let pb: PocketBase | null = null;
+export type PocketBaseInstance = PocketBase;
+export type AuthStore = BaseAuthStore;
 
-export function getPocketBase(): PocketBase {
-  if (!pb) {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8090';
-    pb = new PocketBase(apiUrl);
+export function createPocketBase(cookieHeader?: string) {
+  const pb = new PocketBase(process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8090');
+  
+  if (cookieHeader) {
+    // Load auth store from cookie header
+    pb.authStore.loadFromCookie(cookieHeader);
   }
+  
   return pb;
 }

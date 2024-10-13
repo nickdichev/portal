@@ -3,46 +3,43 @@
 import React from 'react';
 import Link from 'next/link';
 import Breadcrumbs from '@/components/ui/breadcrumbs';
-import { Button } from "@/components/ui/button";
-import { getPocketBase } from '@/lib/pocketbase';
 
 import BreadcrumbItem from '@/components/ui/breadcrumbs';
+import { logout } from '@/app/auth/actions';
 
 import { useRouter } from 'next/navigation';
+import { AuthModel } from 'pocketbase';
 
 interface AppHeaderProps {
-  breadcrumbs: {
-    label: string;
-    href?: string;
-  }[];
+    breadcrumbs: typeof BreadcrumbItem[];
+    model: AuthModel;
 }
 
-export default function AppHeader({ breadcrumbs }: AppHeaderProps) {
-  const router = useRouter();
-  const pb = getPocketBase();
+export default function AppHeader({ breadcrumbs, user }: AppHeaderProps) {
+    const router = useRouter();
 
-  const handleLogout = async () => {
-    pb.authStore.clear();
-    router.push('/auth?type=login');
-  };
+    const logoutAndRedirect = async () => {
+        await logout();
+        router.push('/auth/login');
+    }
 
-  return (
-    <div className="flex justify-between items-center">
-      <div className="flex items-center justify-between w-full mb-4">
-        <Breadcrumbs items={breadcrumbs} />
-        <div className="text-sm">
-          {pb.authStore.isValid ? (
-            <div>
-              <span>{pb.authStore.model?.username}</span>
-              <span onClick={handleLogout} className="ml-2 cursor-pointer">Logout</span>
+    return (
+        <div className="flex justify-between items-center">
+            <div className="flex items-center justify-between w-full mb-4">
+                <Breadcrumbs items={breadcrumbs} />
+                <div className="text-sm">
+                    {user ? (
+                        <div>
+                            <span>{user.username}</span>
+                            <span onClick={logoutAndRedirect} className="ml-2 cursor-pointer">logout</span>
+                        </div>
+                    ) : (
+                        <Link href="/auth/login">
+                            <span className="cursor-pointer">login</span>
+                        </Link>
+                    )}
+                </div>
             </div>
-          ) : (
-            <Link href="/auth/login">
-              <span className="cursor-pointer">login</span>
-            </Link>
-          )}
         </div>
-      </div>
-    </div>
-  );
+    );
 }

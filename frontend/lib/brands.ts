@@ -1,9 +1,7 @@
 import { Brand, BrandReview, BrandRating, BrandProfile, SuggestedBrand } from "@/models/Brand"
-import { getPocketBase } from "./pocketbase"
+import { PocketBaseInstance } from "./pocketbase"
 
-export async function getBrand(slug: string): Promise<Brand> {
-  const pb = getPocketBase();
-
+export async function getBrand(pb: PocketBaseInstance, slug: string): Promise<Brand> {
   try {
     const record = await pb.collection('brands').getFirstListItem(`slug="${slug}"`, {
       expand: 'categories,reviews',
@@ -15,9 +13,7 @@ export async function getBrand(slug: string): Promise<Brand> {
   }
 }
 
-export async function getBrandReviews(brandId: string): Promise<BrandReview[]> {
-  const pb = getPocketBase();
-
+export async function getBrandReviews(pb: PocketBaseInstance, brandId: string): Promise<BrandReview[]> {
   try {
     const records = await pb.collection('brand_reviews').getList(1, 50, {
       filter: `brand="${brandId}"`,
@@ -30,9 +26,7 @@ export async function getBrandReviews(brandId: string): Promise<BrandReview[]> {
   }
 }
 
-export async function getBrandRating(brandId: string): Promise<BrandRating> {
-  const pb = getPocketBase();
-
+export async function getBrandRating(pb: PocketBaseInstance , brandId: string): Promise<BrandRating> {
   try {
     const record = await pb.collection('brand_ratings').getOne(brandId);
     return record as unknown as BrandRating;
@@ -41,9 +35,7 @@ export async function getBrandRating(brandId: string): Promise<BrandRating> {
   }
 }
 
-export async function getBrandProfile(brandId: string): Promise<BrandProfile | null> {
-  const pb = getPocketBase();
-
+export async function getBrandProfile(pb: PocketBaseInstance, brandId: string): Promise<BrandProfile | null> {
   try {
     const result = await pb.collection('brand_profiles').getFirstListItem(`brand="${brandId}"`) as BrandProfile;
     return result;
@@ -52,9 +44,7 @@ export async function getBrandProfile(brandId: string): Promise<BrandProfile | n
   }
 }
 
-export async function getBrandImageUrls(brandId: string, key: 'logo' | 'product_gallery' | 'hero_image'): Promise<string | string[] | null> {
-  const pb = getPocketBase();
-
+export async function getBrandImageUrls(pb: PocketBaseInstance, brandId: string, key: 'logo' | 'product_gallery' | 'hero_image'): Promise<string | string[] | null> {
   try {
     const result = await pb.collection('brand_images').getFirstListItem(`brand="${brandId}"`);
 
@@ -68,14 +58,11 @@ export async function getBrandImageUrls(brandId: string, key: 'logo' | 'product_
   }
 }
 
-export async function getSuggestedBrands(): Promise<SuggestedBrand[]> {
-  const pb = getPocketBase();
-
+export async function getSuggestedBrands(pb: PocketBaseInstance): Promise<SuggestedBrand[]> {
   try {
     const records = await pb.collection('suggested_brands').getFullList();
     return records as unknown as SuggestedBrand[];
-  } catch (error) {
-    console.error('Error fetching suggested brands:', error);
-    return [];
+  } catch {
+    throw new Error(`Suggested brands not found`)
   }
 }

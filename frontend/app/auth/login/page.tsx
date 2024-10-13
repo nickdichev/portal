@@ -1,22 +1,31 @@
 "use client"
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { ChevronRight } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import Breadcrumbs from '@/components/ui/breadcrumbs'
+import { login } from '../actions'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const router = useRouter()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Here you would typically handle the login logic
-    console.log('Login attempted with:', email, password)
+    setError('')
+    const result = await login(email, password)
+    if (result.success) {
+      router.push('/brands')
+      router.refresh() // Refresh the current route to update server components
+    } else {
+      setError('Login failed. Please check your credentials and try again.')
+    }
   }
 
   return (

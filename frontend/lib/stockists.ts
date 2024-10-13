@@ -1,9 +1,7 @@
 import { Stockist } from "@/models/Stockist";
-import { getPocketBase } from "./pocketbase";
+import { PocketBaseInstance } from "./pocketbase";
 
-export async function getStockists(brandId?: string): Promise<Stockist[]> {
-    const pb = getPocketBase();
-
+export async function getStockists(pb: PocketBaseInstance, brandId?: string): Promise<Stockist[]> {
     const filter = brandId ? `brands ~ "${brandId}"` : '';
     const records = await pb.collection('stockists').getList(1, 50, {
         sort: 'name',
@@ -13,9 +11,7 @@ export async function getStockists(brandId?: string): Promise<Stockist[]> {
     return records.items as unknown as Stockist[];
 }
 
-export async function getFeaturedStockists(): Promise<Stockist[]> {
-    const pb = getPocketBase();
-
+export async function getFeaturedStockists(pb: PocketBaseInstance): Promise<Stockist[]> {
     try {
         const records = await pb.collection('stockists').getList(1, 10, {
             sort: 'name',

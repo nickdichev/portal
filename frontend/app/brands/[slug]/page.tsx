@@ -15,22 +15,23 @@ import Rating from '@/components/brands/show/rating'
 import Reviews from '@/components/brands/show/reviews'
 import SuggestedBrands from '@/components/brands/show/suggested_brands'
 
+import { getServerSidePocketBase } from '@/app/auth/actions'
 import { getBrand, getBrandRating, getBrandReviews, getBrandProfile, getBrandImageUrls } from '@/lib/brands'
 import { getStockists } from '@/lib/stockists'
 
-export const revalidate = 15
 
 export default async function BrandShowPage({ params }: { params: { slug: string } }) {
-  const brand = await getBrand(params.slug);
-  const brandRating = await getBrandRating(brand.id);
-  const reviews = await getBrandReviews(brand.id);
-  const brandProfile = await getBrandProfile(brand.id);
+  const pb = await getServerSidePocketBase();
+  const brand = await getBrand(pb, params.slug);
+  const brandRating = await getBrandRating(pb, brand.id);
+  const reviews = await getBrandReviews(pb, brand.id);
+  const brandProfile = await getBrandProfile(pb, brand.id);
 
-  const heroImage = await getBrandImageUrls(brand.id, 'hero_image');
-  const product_gallery = await getBrandImageUrls(brand.id, 'product_gallery');
-  const logo = await getBrandImageUrls(brand.id, 'logo');
+  const heroImage = await getBrandImageUrls(pb, brand.id, 'hero_image');
+  const product_gallery = await getBrandImageUrls(pb, brand.id, 'product_gallery');
+  const logo = await getBrandImageUrls(pb, brand.id, 'logo');
 
-  const stockists = await getStockists(brand.id);
+  const stockists = await getStockists(pb, brand.id);
 
   const linesheets = [
     { season: 'Spring Summer 2024', image: '/placeholder.svg', isNew: true },
@@ -45,9 +46,11 @@ export default async function BrandShowPage({ params }: { params: { slug: string
     { label: brand.name, href: `/brands/${brand.slug}` },
   ]
 
+  const authStore = pb.authStore;
+
   return (
     <div className="max-w-[1200px] mx-auto bg-gray-100 p-4">
-      <AppHeader breadcrumbs={breadcrumbs} />
+      <AppHeader breadcrumbs={breadcrumbs} user={authStore.isValid ? authStore.model : null} />
 
       {heroImage && (
         <div className="relative mb-4 h-48 sm:h-64 bg-gray-200 rounded-lg overflow-hidden">
