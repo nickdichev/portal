@@ -1,4 +1,4 @@
-import Breadcrumbs from '@/components/ui/breadcrumbs'
+import AppHeader from '@/components/ui/app_header'
 import BrandHeader from '@/components/stockists/index/brand_header';
 import FAQ from '@/components/stockists/index/faq';
 import FeaturedStockists from '@/components/stockists/index/featured_stockists';
@@ -21,7 +21,7 @@ export default async function StockistsPage({ params }: { params: { slug: string
   ]
 
   return <div className="max-w-[1200px] mx-auto bg-gray-100 p-4">
-    <Breadcrumbs items={breadcrumbs} />
+    <AppHeader breadcrumbs={breadcrumbs} />
 
     <BrandHeader brand={brand} brand_rating={brandRating} />
     <FeaturedStockists featuredStockists={featuredStockists} />

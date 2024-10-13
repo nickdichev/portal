@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import Link from 'next/link'
 
-import Breadcrumbs from '@/components/ui/breadcrumbs'
+import AppHeader from '@/components/ui/app_header'
 import Header from '@/components/brands/show/header'
 import InfoCard from '@/components/brands/show/info_card'
 import ProductGallery from '@/components/brands/show/product_gallery'
@@ -47,7 +47,7 @@ export default async function BrandShowPage({ params }: { params: { slug: string
 
   return (
     <div className="max-w-[1200px] mx-auto bg-gray-100 p-4">
-      <Breadcrumbs items={breadcrumbs} />
+      <AppHeader breadcrumbs={breadcrumbs} />
 
       {heroImage && (
         <div className="relative mb-4 h-48 sm:h-64 bg-gray-200 rounded-lg overflow-hidden">

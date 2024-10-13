@@ -6,13 +6,9 @@ interface BreadcrumbItem {
   href?: string;
 }
 
-interface BreadcrumbsProps {
-  items: BreadcrumbItem[];
-}
-
-export default function Breadcrumbs({ items }: BreadcrumbsProps) {
+export default function Breadcrumbs({ items }: { items: BreadcrumbItem[] }) {
   return (
-    <nav className="text-sm mb-4 overflow-x-auto whitespace-nowrap">
+    <nav className="text-sm overflow-x-auto whitespace-nowrap">
       <ol className="list-none p-0 inline-flex">
         <li className="flex items-center">
           <Link href="/" className="text-gray-500 hover:underline">portal</Link>
