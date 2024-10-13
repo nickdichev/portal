@@ -37,7 +37,7 @@ export default function AppHeader({ breadcrumbs }: AppHeaderProps) {
               <span onClick={handleLogout} className="ml-2 cursor-pointer">Logout</span>
             </div>
           ) : (
-            <Link href="/auth?type=login">
+            <Link href="/auth/login">
               <span className="cursor-pointer">login</span>
             </Link>
           )}
