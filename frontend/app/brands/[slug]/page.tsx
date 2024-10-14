@@ -1,8 +1,7 @@
 import Image from 'next/image'
-import { ChevronRight, MessageCircle } from 'lucide-react'
+import { MessageCircle } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import Link from 'next/link'
 
 import AppHeader from '@/components/ui/app_header'
 import Header from '@/components/brands/show/header'
@@ -29,7 +28,6 @@ export default async function BrandShowPage({ params }: { params: { slug: string
 
   const heroImage = await getBrandImageUrls(pb, brand.id, 'hero_image');
   const product_gallery = await getBrandImageUrls(pb, brand.id, 'product_gallery');
-  const logo = await getBrandImageUrls(pb, brand.id, 'logo');
 
   const stockists = await getStockists(pb, brand.id);
 

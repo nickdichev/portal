@@ -4,7 +4,9 @@ import { useRef, useEffect } from 'react'
 import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 
-export default function StockistsMap({ stockists }: { stockists: any }) {
+import { Stockist } from '@/models/Stockist'
+
+export default function StockistsMap({ stockists }: { stockists: Stockist[] }) {
   const mapContainer = useRef(null)
   const map = useRef<maplibregl.Map | null>(null)
 

@@ -28,3 +28,15 @@ export async function logout() {
   return { success: true };
 }
 
+export async function register(email: string, password: string) {
+  const pb = createPocketBase();
+
+  try {
+    const authData = await pb.collection('users').create({ email, password });
+    return { success: true, user: authData };
+  } catch (error) {
+    console.error('Registration failed:', error);
+    return { success: false, error: 'Registration failed: ' + error };
+  }
+}
+

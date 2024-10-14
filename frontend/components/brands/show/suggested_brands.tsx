@@ -1,13 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
 import { Card, CardContent } from "@/components/ui/card";
 import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { SuggestedBrand } from '@/models/Brand';
 import { getSuggestedBrands } from '@/lib/brands';
-import { createPocketBase, PocketBaseInstance } from '@/lib/pocketbase';
+import { createPocketBase } from '@/lib/pocketbase';
 
 function SuggestedBrandsContent() {
   const [suggestedBrands, setSuggestedBrands] = useState<SuggestedBrand[]>([]);
@@ -20,7 +19,7 @@ function SuggestedBrandsContent() {
       setSuggestedBrands(brands);
       setIsLoading(false);
     });
-  }, []);
+  }, [pb]);
 
   if (isLoading) {
     return <Loader2 className="h-8 w-8 animate-spin mx-auto" />;
@@ -41,7 +40,7 @@ function SuggestedBrandsContent() {
   );
 }
 
-export default function SuggestedBrands(pb: PocketBaseInstance) {
+export default function SuggestedBrands() {
   return (
     <Card className="mb-4">
       <CardContent className="p-4">

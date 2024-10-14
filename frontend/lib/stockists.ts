@@ -18,7 +18,7 @@ export async function getFeaturedStockists(pb: PocketBaseInstance): Promise<Stoc
         });
 
         return records.items as unknown as Stockist[];
-    } catch (error) {
-        throw new Error("Failed to fetch featured stockists");
+    } catch {
+        return []
     }
 }

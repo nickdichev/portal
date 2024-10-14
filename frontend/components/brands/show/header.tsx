@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import StarRating from '@/components/ui/star_rating'
 import { Button } from "@/components/ui/button"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import { Heart, Flag, Star } from 'lucide-react'
+import { Heart, Flag } from 'lucide-react'
 import Link from 'next/link'
 
 import { Brand, BrandRating, BrandProfile } from '@/models/Brand'

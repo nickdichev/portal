@@ -10,7 +10,7 @@ function Testimonial({ quote, author, title }: TestimonialProps) {
   return (
     <Card>
       <CardContent className="p-4">
-        <p className="italic text-gray-600 mb-2">"{quote}"</p>
+        <p className="italic text-gray-600 mb-2">&ldquo;{quote}&rdquo;</p>
         <p className="font-semibold">- {author}, {title}</p>
       </CardContent>
     </Card>

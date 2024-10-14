@@ -39,7 +39,7 @@ export async function getBrandProfile(pb: PocketBaseInstance, brandId: string): 
   try {
     const result = await pb.collection('brand_profiles').getFirstListItem(`brand="${brandId}"`) as BrandProfile;
     return result;
-  } catch (error) {
+  } catch {
     return null;
   }
 }
@@ -53,7 +53,7 @@ export async function getBrandImageUrls(pb: PocketBaseInstance, brandId: string,
     } else {
       return pb.files.getUrl(result, result[key]) as string;
     }
-  } catch (error) {
+  } catch {
     return null;
   }
 }

@@ -37,6 +37,11 @@ export default function LoginPage() {
           <CardTitle className="text-2xl font-bold text-center">login</CardTitle>
         </CardHeader>
         <CardContent>
+          {error && (
+            <div className="mb-4 text-red-600 text-sm text-center">
+              {error}
+            </div>
+          )}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">email</Label>
@@ -70,7 +75,7 @@ export default function LoginPage() {
             </Link>
           </div>
           <div className="mt-2 text-center text-sm">
-            don't have an account?{" "}
+            don&apos;t have an account?{" "}
             <Link href="/auth/register" className="text-blue-600 hover:underline">
               sign up
             </Link>
