@@ -4,15 +4,15 @@ import React from 'react';
 import Link from 'next/link';
 import Breadcrumbs from '@/components/ui/breadcrumbs';
 
-import BreadcrumbItem from '@/components/ui/breadcrumbs';
+import { BreadcrumbItem } from '@/components/ui/breadcrumbs';
 import { logout } from '@/app/auth/actions';
 
 import { useRouter } from 'next/navigation';
 import { AuthModel } from 'pocketbase';
 
 interface AppHeaderProps {
-    breadcrumbs: typeof BreadcrumbItem[];
-    model: AuthModel;
+    breadcrumbs: BreadcrumbItem[];
+    user: AuthModel;
 }
 
 export default function AppHeader({ breadcrumbs, user }: AppHeaderProps) {

@@ -7,12 +7,15 @@ import Testimonials from '@/components/stockists/index/testimonials';
 
 import { getBrand, getBrandRating } from '@/lib/brands'
 import { getFeaturedStockists, getStockists } from '@/lib/stockists'
+import { getServerSidePocketBase } from '@/app/auth/actions';
 
 export default async function StockistsPage({ params }: { params: { slug: string } }) {
-  const brand = await getBrand(params.slug);
-  const brandRating = await getBrandRating(brand.id);
-  const stockists = await getStockists(brand.id);
-  const featuredStockists = await getFeaturedStockists();
+  const pb = await getServerSidePocketBase();
+
+  const brand = await getBrand(pb, params.slug);
+  const brandRating = await getBrandRating(pb, brand.id);
+  const stockists = await getStockists(pb, brand.id);
+  const featuredStockists = await getFeaturedStockists(pb);
 
   const breadcrumbs = [
     { label: 'brands', href: '/brands' },
@@ -20,8 +23,10 @@ export default async function StockistsPage({ params }: { params: { slug: string
     { label: 'stockists', href: `/brands/${brand.slug}/stockists` },
   ]
 
+  const authStore = pb.authStore;
+
   return <div className="max-w-[1200px] mx-auto bg-gray-100 p-4">
-    <AppHeader breadcrumbs={breadcrumbs} />
+    <AppHeader breadcrumbs={breadcrumbs} user={authStore.isValid ? authStore.model : null} />
 
     <BrandHeader brand={brand} brand_rating={brandRating} />
     <FeaturedStockists featuredStockists={featuredStockists} />
