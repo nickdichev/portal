@@ -29,9 +29,9 @@ export default function AppHeader({ breadcrumbs, user }: AppHeaderProps) {
                 <Breadcrumbs items={breadcrumbs} />
                 <div className="text-sm">
                     {user ? (
-                        <div>
+                        <div className="flex flex-col items-end">
                             <span>{user.username}</span>
-                            <span onClick={logoutAndRedirect} className="ml-2 cursor-pointer">logout</span>
+                            <span onClick={logoutAndRedirect} className="mt-1 cursor-pointer text-gray-500 hover:text-gray-700">logout</span>
                         </div>
                     ) : (
                         <Link href="/auth/login">
