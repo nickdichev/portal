@@ -88,7 +88,7 @@ export default function Header({ props }: { props: HeaderProps }) {
                 setIsSaved(newSavedState)
             } catch (error) {
                 console.error('Error toggling brand saved state:', error)
-                // Optionally, show an error message to the user
+                router.push('/auth/login')
             }
         })
     }
