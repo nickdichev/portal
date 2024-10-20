@@ -1,7 +1,8 @@
 'use client'
 
-import { useState, useRef, useEffect, useMemo } from 'react'
+import { useState, useRef, useEffect, useMemo, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
+import { toggleSavedBrandAction } from '@/app/brands/actions'
 
 import StarRating from '@/components/ui/star_rating'
 import { Button } from "@/components/ui/button"
@@ -13,13 +14,15 @@ import { Brand, BrandRating, BrandProfile } from '@/models/Brand'
 
 type HeaderProps = {
     brand: Brand;
-    isSaved: boolean;
+    initialSavedState: boolean;
     brandRating: BrandRating;
     brandProfile: BrandProfile | null;
 }
 
 export default function Header({ props }: { props: HeaderProps }) {
-    const { brand, isSaved, brandRating, brandProfile } = props
+    const { brand, initialSavedState, brandRating, brandProfile } = props
+    const [isSaved, setIsSaved] = useState(initialSavedState)
+    const [isPending, startTransition] = useTransition()
 
     const headerRef = useRef<HTMLDivElement>(null)
     const [isSticky, setIsSticky] = useState(false)
@@ -78,88 +81,98 @@ export default function Header({ props }: { props: HeaderProps }) {
         }
       }, [navigationTabs])
 
-        const toggleSave = () => { }
+    const toggleSave = () => {
+        startTransition(async () => {
+            try {
+                const newSavedState = await toggleSavedBrandAction(brand.id)
+                setIsSaved(newSavedState)
+            } catch (error) {
+                console.error('Error toggling brand saved state:', error)
+                // Optionally, show an error message to the user
+            }
+        })
+    }
 
-        return (
-            <div
-                ref={headerRef}
-                className={`bg-white rounded-lg p-4 mb-4 shadow relative transition-all duration-300 ${isSticky ? 'md:fixed md:top-0 md:left-0 md:right-0 md:z-10 md:max-w-[1200px] md:mx-auto md:rounded-none md:shadow-md' : ''
-                    }`}
-            >
-                <div className={`flex flex-col sm:flex-row justify-between items-start sm:items-center ${isSticky ? 'md:items-center' : ''}`}>
-                    <h2 className={`text-2xl font-bold mb-4 sm:mb-0 ${isSticky ? 'md:text-xl md:mb-0' : ''}`}>{brand.name}</h2>
-                    <div className={`flex flex-col sm:flex-row gap-2 w-full sm:w-auto ${isSticky ? 'md:flex-row md:items-center' : ''}`}>
-                        {isSticky && (
-                            <Button
-                                variant="outline"
-                                size="sm"
-                                onClick={toggleSave}
-                                className={`flex items-center gap-2 ${isSaved ? 'text-red-500 hover:text-red-600' : 'text-gray-500 hover:text-gray-600'
-                                    }`}
-                            >
-                                <Heart className={`h-4 w-4 ${isSaved ? 'fill-current' : ''}`} />
-                                {isSaved ? 'Saved' : 'Save'}
-                            </Button>
-                        )}
-                        <Link href={brand?.website || '#'} target="_blank" rel="noopener noreferrer">
-                            <Button variant="default" className={`w-full sm:w-auto ${isSticky ? 'md:text-sm md:py-1' : ''}`}>
-                                Visit Website
-                            </Button>
-                        </Link>
-                        <Button variant="default" className={`w-full sm:w-auto ${isSticky ? 'md:text-sm md:py-1' : ''}`}>
-                            Request Linesheets
+    return (
+        <div
+            ref={headerRef}
+            className={`bg-white rounded-lg p-4 mb-4 shadow relative transition-all duration-300 ${isSticky ? 'md:fixed md:top-0 md:left-0 md:right-0 md:z-10 md:max-w-[1200px] md:mx-auto md:rounded-none md:shadow-md' : ''
+                }`}
+        >
+            <div className={`flex flex-col sm:flex-row justify-between items-start sm:items-center ${isSticky ? 'md:items-center' : ''}`}>
+                <h2 className={`text-2xl font-bold mb-4 sm:mb-0 ${isSticky ? 'md:text-xl md:mb-0' : ''}`}>{brand.name}</h2>
+                <div className={`flex flex-col sm:flex-row gap-2 w-full sm:w-auto ${isSticky ? 'md:flex-row md:items-center' : ''}`}>
+                    {isSticky && (
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={toggleSave}
+                            className={`flex items-center gap-2 ${isSaved ? 'text-red-500 hover:text-red-600' : 'text-gray-500 hover:text-gray-600'
+                                }`}
+                        >
+                            <Heart className={`h-4 w-4 ${isSaved ? 'fill-current' : ''}`} />
+                            {isSaved ? 'Saved' : 'Save'}
                         </Button>
-                    </div>
-                </div>
-                <div className={`flex flex-col items-start gap-2 mt-2 ${isSticky ? 'md:hidden' : ''}`}>
-                    <StarRating avg_rating={brandRating.avg_rating} review_count={brandRating.review_count} />
-                    <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={toggleSave}
-                        className={`flex items-center gap-2 px-0 ${isSaved ? 'text-red-500 hover:text-red-600' : 'text-gray-500 hover:text-gray-600'
-                            }`}
-                    >
-                        <Heart className={`h-4 w-4 ${isSaved ? 'fill-current' : ''}`} />
-                        {isSaved ? 'Saved' : 'Save for Later'}
+                    )}
+                    <Link href={brand?.website || '#'} target="_blank" rel="noopener noreferrer">
+                        <Button variant="default" className={`w-full sm:w-auto ${isSticky ? 'md:text-sm md:py-1' : ''}`}>
+                            Visit Website
+                        </Button>
+                    </Link>
+                    <Button variant="default" className={`w-full sm:w-auto ${isSticky ? 'md:text-sm md:py-1' : ''}`}>
+                        Request Linesheets
                     </Button>
                 </div>
-                {/* Navigation Tabs */}
-                <div className={`mt-4 ${isSticky ? 'md:mt-2' : ''}`}>
-                    <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 sm:gap-0">
-                        {navigationTabs.map((tab: NavigationTab) => (
-                            <Button
-                                key={tab.id}
-                                variant="ghost"
-                                size="sm"
-                                className={`w-full sm:w-auto text-xs sm:text-sm px-2 sm:px-3 py-1 sm:py-2 ${activeTab === tab.id ? 'bg-primary/10 text-primary' : 'text-gray-500'
-                                    }`}
-                                onClick={() => scrollToSection(tab.id)}
-                            >
-                                {tab.label}
-                            </Button>
-                        ))}
-                        {!brandProfile?.claimed && (
-                            <TooltipProvider>
-                                <Tooltip>
-                                <TooltipTrigger asChild>
-                                    <Button
-                                        variant="ghost"
-                                        size="sm"
-                                        className="w-full sm:w-auto text-xs sm:text-sm px-2 sm:px-3 py-1 sm:py-2 text-yellow-600 hover:text-yellow-700"
-                                    >
-                                        <Flag className="h-4 w-4 mr-1 sm:mr-2" />
-                                        Unclaimed Profile
-                                    </Button>
-                                </TooltipTrigger>
-                                <TooltipContent side="bottom" align="end" className="w-64 sm:w-80">
-                                    <p className="text-sm">Is this your brand&apos;s profile? Click here to claim your listing to update the content and reply to buyer&apos;s inquiries</p>
-                                </TooltipContent>
-                                </Tooltip>
-                            </TooltipProvider>
-                        )}
-                    </div>
+            </div>
+            <div className={`flex flex-col items-start gap-2 mt-2 ${isSticky ? 'md:hidden' : ''}`}>
+                <StarRating avg_rating={brandRating.avg_rating} review_count={brandRating.review_count} />
+                <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={toggleSave}
+                    className={`flex items-center gap-2 px-0 ${isSaved ? 'text-red-500 hover:text-red-600' : 'text-gray-500 hover:text-gray-600'
+                        }`}
+                >
+                    <Heart className={`h-4 w-4 ${isSaved ? 'fill-current' : ''}`} />
+                    {isSaved ? 'Saved' : 'Save for Later'}
+                </Button>
+            </div>
+            {/* Navigation Tabs */}
+            <div className={`mt-4 ${isSticky ? 'md:mt-2' : ''}`}>
+                <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 sm:gap-0">
+                    {navigationTabs.map((tab: NavigationTab) => (
+                        <Button
+                            key={tab.id}
+                            variant="ghost"
+                            size="sm"
+                            className={`w-full sm:w-auto text-xs sm:text-sm px-2 sm:px-3 py-1 sm:py-2 ${activeTab === tab.id ? 'bg-primary/10 text-primary' : 'text-gray-500'
+                                }`}
+                            onClick={() => scrollToSection(tab.id)}
+                        >
+                            {tab.label}
+                        </Button>
+                    ))}
+                    {!brandProfile?.claimed && (
+                        <TooltipProvider>
+                            <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    className="w-full sm:w-auto text-xs sm:text-sm px-2 sm:px-3 py-1 sm:py-2 text-yellow-600 hover:text-yellow-700"
+                                >
+                                    <Flag className="h-4 w-4 mr-1 sm:mr-2" />
+                                    Unclaimed Profile
+                                </Button>
+                            </TooltipTrigger>
+                            <TooltipContent side="bottom" align="end" className="w-64 sm:w-80">
+                                <p className="text-sm">Is this your brand&apos;s profile? Click here to claim your listing to update the content and reply to buyer&apos;s inquiries</p>
+                            </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
+                    )}
                 </div>
             </div>
-        )
-    }
+        </div>
+    )
+}

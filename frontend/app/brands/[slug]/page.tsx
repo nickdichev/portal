@@ -15,7 +15,7 @@ import Reviews from '@/components/brands/show/reviews'
 import SuggestedBrands from '@/components/brands/show/suggested_brands'
 
 import { getServerSidePocketBase } from '@/app/auth/actions'
-import { getBrand, getBrandRating, getBrandReviews, getBrandProfile, getBrandImageUrls } from '@/lib/brands'
+import { getBrand, getBrandRating, getBrandReviews, getBrandProfile, getBrandImageUrls, isBrandSaved } from '@/lib/brands'
 import { getStockists } from '@/lib/stockists'
 
 export default async function BrandShowPage({ params }: { params: { slug: string } }) {
@@ -26,6 +26,7 @@ export default async function BrandShowPage({ params }: { params: { slug: string
   const brandRating = await getBrandRating(pb, brand.id);
   const reviews = await getBrandReviews(pb, brand.id);
   const brandProfile = await getBrandProfile(pb, brand.id);
+  const isSaved = await isBrandSaved(pb, brand.id, user?.id);
 
   const heroImage = await getBrandImageUrls(pb, brand.id, 'hero_image');
   const product_gallery = await getBrandImageUrls(pb, brand.id, 'product_gallery');
@@ -55,7 +56,7 @@ export default async function BrandShowPage({ params }: { params: { slug: string
         </div>
       )}
 
-      <Header props={{ brand, brandRating, brandProfile, isSaved: true }} />
+      <Header props={{ brand, brandRating, brandProfile, initialSavedState: isSaved }} />
 
       <div className="flex flex-col md:flex-row gap-4">
         {/* Mobile-first Right Column (will be on top for mobile) */}

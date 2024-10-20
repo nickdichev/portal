@@ -66,3 +66,37 @@ export async function getSuggestedBrands(pb: PocketBaseInstance): Promise<Sugges
     return [];
   }
 }
+
+export async function isBrandSaved(pb: PocketBaseInstance, brandId: string, userId: string): Promise<boolean> {
+  try {
+    const record = await pb.collection('user_saved_brands').getFirstListItem(`brand="${brandId}" && user="${userId}"`);
+    return record !== null;
+  } catch {
+    return false;
+  }
+}
+
+export async function saveBrand(pb: PocketBaseInstance, brandId: string, userId: string): Promise<void> {
+  await pb.collection('user_saved_brands').create({ brand: brandId, user: userId });
+}
+
+export async function unsaveBrand(pb: PocketBaseInstance, brandId: string, userId: string): Promise<void> {
+  const record = await pb.collection('user_saved_brands').getFirstListItem(`brand="${brandId}" && user="${userId}"`);
+  await pb.collection('user_saved_brands').delete(record.id);
+}
+
+export async function toggleBrandSaved(pb: PocketBaseInstance, brandId: string, userId: string): Promise<boolean> {
+  try {
+    const isSaved = await isBrandSaved(pb, brandId, userId);
+    if (isSaved) {
+      await unsaveBrand(pb, brandId, userId);
+      return false;
+    } else {
+      await saveBrand(pb, brandId, userId);
+      return true;
+    }
+  } catch (error) {
+    console.error("Error toggling brand saved status:", error);
+    throw error;
+  }
+}
