@@ -20,6 +20,7 @@ import { getStockists } from '@/lib/stockists'
 
 export default async function BrandShowPage({ params }: { params: { slug: string } }) {
   const pb = await getServerSidePocketBase();
+  const user = pb.authStore.isValid ? pb.authStore.model : null;
 
   const brand = await getBrand(pb, params.slug);
   const brandRating = await getBrandRating(pb, brand.id);
@@ -44,11 +45,9 @@ export default async function BrandShowPage({ params }: { params: { slug: string
     { label: brand.name, href: `/brands/${brand.slug}` },
   ]
 
-  const authStore = pb.authStore;
-
   return (
     <div className="max-w-[1200px] mx-auto bg-gray-100 p-4">
-      <AppHeader breadcrumbs={breadcrumbs} user={authStore.isValid ? authStore.model : null} />
+      <AppHeader breadcrumbs={breadcrumbs} user={user} />
 
       {heroImage && (
         <div className="relative mb-4 h-48 sm:h-64 bg-gray-200 rounded-lg overflow-hidden">
