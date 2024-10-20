@@ -27,13 +27,7 @@ export default function StockistsList({ brand, stockists }: { brand: Brand, stoc
     const totalPages = 1
 
     const filteredStockists = stockists.filter(stockist =>
-        (searchTerm === '' || stockist.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            stockist.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            stockist.type.toLowerCase().includes(searchTerm.toLowerCase())) &&
-        (filters.location.length === 0 || filters.location.includes(stockist.location)) &&
-        (filters.pricePoint.length === 0 || filters.pricePoint.includes(stockist.pricePoint)) &&
-        (filters.category.length === 0 || filters.category.includes(stockist.category)) &&
-        (filters.type.length === 0 || filters.type.includes(stockist.type))
+        stockists
     )
 
     return <div className="bg-white rounded-lg p-4 shadow">

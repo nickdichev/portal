@@ -18,6 +18,8 @@ export enum PricePoint {
 export interface Stockist {
     id: string;
     name: string;
+    image: string;
+    location: string;
     price_range_low?: number;
     price_range_high?: number;
     category: StockistCategory;

@@ -14,11 +14,7 @@ export default function StockistsCard({ stockist }: { stockist: Stockist }) {
         setIsFavorite(prev => !prev)
     }
 
-    return <Card 
-      key={stockist.id} 
-      className={`transition-all duration-200 ${selectedStockist?.id === stockist.id ? 'ring-2 ring-primary shadow-lg' : 'hover:shadow-md'}`}
-      ref={el => stockistRefs.current[stockist.id] = el}
-    >
+    return <Card key={stockist.id} >
       <CardContent className="p-2">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">

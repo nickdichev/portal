@@ -53,14 +53,19 @@ export default function StockistsMap({ stockists }: { stockists: Stockist[] }) {
 
       // Add popup on click
       map.current!.on('click', 'cities-layer', (e) => {
-        if (!e.features) return;
-        const coordinates = e.features[0].geometry.coordinates.slice();
-        const name = e.features[0].properties.name;
+        if (!e.features || e.features.length === 0) return;
+        const feature = e.features[0];
+        if (feature.geometry.type !== 'Point') return;
 
-        new maplibregl.Popup()
-          .setLngLat(coordinates as [number, number])
-          .setHTML(`<h3>${name}</h3>`)
-          .addTo(map.current!);
+        const coordinates = feature.geometry.coordinates.slice();
+        const name = feature.properties?.name;
+
+        if (coordinates && name) {
+          new maplibregl.Popup()
+            .setLngLat(coordinates as [number, number])
+            .setHTML(`<h3>${name}</h3>`)
+            .addTo(map.current!);
+        }
       });
 
       // Change cursor to pointer when hovering over a marker
