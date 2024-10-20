@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect, useMemo, useTransition } from 'react'
+import { useState, useRef, useEffect, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import { toggleSavedBrandAction } from '@/app/brands/actions'
 
@@ -22,7 +22,6 @@ type HeaderProps = {
 export default function Header({ props }: { props: HeaderProps }) {
     const { brand, initialSavedState, brandRating, brandProfile } = props
     const [isSaved, setIsSaved] = useState(initialSavedState)
-    const [isPending, startTransition] = useTransition()
 
     const headerRef = useRef<HTMLDivElement>(null)
     const [isSticky, setIsSticky] = useState(false)
@@ -81,16 +80,14 @@ export default function Header({ props }: { props: HeaderProps }) {
         }
       }, [navigationTabs])
 
-    const toggleSave = () => {
-        startTransition(async () => {
-            try {
-                const newSavedState = await toggleSavedBrandAction(brand.id)
-                setIsSaved(newSavedState)
-            } catch (error) {
-                console.error('Error toggling brand saved state:', error)
-                router.push('/auth/login')
-            }
-        })
+    const toggleSave = async () => {
+        try {
+            const newSavedState = await toggleSavedBrandAction(brand.id)
+            setIsSaved(newSavedState)
+        } catch (error) {
+            console.error('Error toggling brand saved state:', error)
+            router.push('/auth/login')
+        }
     }
 
     return (
